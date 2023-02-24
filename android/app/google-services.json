@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "930932585919",
+    "project_id": "babershopmanagement",
+    "storage_bucket": "babershopmanagement.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930932585919:android:7c1c0090545f11928ddd0a",
+        "android_client_info": {
+          "package_name": "com.elsner.barber_booking_management"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "930932585919-38vatj92g4egg2d2b273803nssdsonsp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elsner.barber_booking_management",
+            "certificate_hash": "8442ba7022a92ad6f85e941e843c82eb3fb7e175"
+          }
+        },
+        {
+          "client_id": "930932585919-m8bcq2ukq5npaoagkqob27gn0hkh58vt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnYYHKdy2i2riYNmHGASGxE2x71H2-xM4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "930932585919-m8bcq2ukq5npaoagkqob27gn0hkh58vt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>930932585919-rr9bdtnk8pl7jmb97vt6miri2d23g876.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.930932585919-rr9bdtnk8pl7jmb97vt6miri2d23g876</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>930932585919-38vatj92g4egg2d2b273803nssdsonsp.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAitVf0kYLzcCl1jLQob2hpFVDEEzhrgHw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>930932585919</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.elsner.barberBookingManagement</string>
+	<key>PROJECT_ID</key>
+	<string>babershopmanagement</string>
+	<key>STORAGE_BUCKET</key>
+	<string>babershopmanagement.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:930932585919:ios:9d7dad5e11625c328ddd0a</string>
+</dict>
+</plist>
