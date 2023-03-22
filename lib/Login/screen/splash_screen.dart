@@ -3,10 +3,12 @@ import 'package:barber_booking_management/widget/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/app_color.dart';
+import '../../utils/app_font.dart';
 import '../../utils/app_image.dart';
 import '../../utils/app_prefrence_key.dart';
 import '../../utils/app_utils.dart';
 import 'login_screen.dart';
+import 'login_screens_with_tabs.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -31,7 +33,7 @@ class SplashScreenState extends State<SplashScreen>{
               MaterialPageRoute(builder: (context) =>  const BottomNavBarScreen()));
         } else{
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) =>  const LoginScreen()));
+              MaterialPageRoute(builder: (context) =>  const LoginScreensWithTabs()));
         }
     });
   }
@@ -53,8 +55,8 @@ class SplashScreenState extends State<SplashScreen>{
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const SizedBox(),
-              Image.asset(AppImage.appLogo,height: 130,width: 130,fit: BoxFit.fill),
-              const Text('Barber Shop Management',textAlign: TextAlign.center,style: TextStyle(color: AppColor.summerColor2,fontSize: 18))
+              Image.asset(AppImage.appIcon,height: 200,width: 200,fit: BoxFit.fill),
+              const Text('The Barber Shop - Hair Salon',textAlign: TextAlign.center,style: TextStyle(color: Color(0xffFDE2EA),fontSize: 18,fontFamily: AppFont.bold))
             ],
           ),
         ),

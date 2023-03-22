@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../utils/app_color.dart';
 import '../../Category/provider/appointment_provider.dart';
+import '../../utils/app_font.dart';
 import '../firebase/book_appointment.dart';
 
 class AppointmentBookScreen extends StatefulWidget {
@@ -118,7 +119,7 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
           const Center(
             child: Padding(
               padding: EdgeInsets.fromLTRB(30,10,30,20),
-              child: Text("Successfully your appointment book",textAlign: TextAlign.center,),
+              child: Text("Successfully your appointment book",textAlign: TextAlign.center,style: TextStyle(fontFamily: AppFont.semiBold),),
             ),
           ),
           GestureDetector(
@@ -218,7 +219,7 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Appointment Book'),
+        title: const Text('Book Appointment',style: TextStyle(fontFamily: AppFont.bold),),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -234,7 +235,7 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
                   width: double.infinity,height: 170,fit: BoxFit.fill),
               ),
               const SizedBox(height: 5),
-              Text('${widget.snapshotData['shopName']}',maxLines: 1,overflow: TextOverflow.ellipsis,),
+              Text('${widget.snapshotData['shopName']}',maxLines: 1,overflow: TextOverflow.ellipsis,style: TextStyle(fontFamily: AppFont.semiBold),),
               const SizedBox(height: 2),
               RatingBar.builder(
                 initialRating: widget.snapshotData['rating'],
@@ -258,18 +259,18 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Text('Price',style: TextStyle(fontSize: 12),),
+                  const Text('Price',style: TextStyle(fontSize: 12,fontFamily: AppFont.regular),),
                   const SizedBox(width: 10,),
-                  Text('₹${widget.snapshotData['price']}',style: const TextStyle(fontSize: 16,color: AppColor.redColor),),
+                  Text('₹${widget.snapshotData['price']}',style: const TextStyle(fontSize: 16,color: AppColor.redColor,fontFamily: AppFont.medium),),
                 ],
               ),
               const SizedBox(height: 5,),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.watch_later_outlined,color: AppColor.appColor,size: 22,),
-                  const SizedBox(width: 10,),
-                  Text('${widget.snapshotData['openingHour']} - ${widget.snapshotData['closingHour']}',style: const TextStyle(fontSize: 12,height: 1.5),),
+                  const Icon(Icons.watch_later_outlined,color: AppColor.appColor,size: 20,),
+                  const SizedBox(width: 05,),
+                  Text('${widget.snapshotData['openingHour']} - ${widget.snapshotData['closingHour']}',style: const TextStyle(fontSize: 12,height: 1.6,fontFamily: AppFont.regular),),
                 ],
               ),
               Divider(height: 10,color: AppColor.blackColor.withOpacity(0.3),),
@@ -287,7 +288,7 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Select Date'),
+                      const Text('Select Date',style: TextStyle(fontFamily: AppFont.regular),),
                       const SizedBox(height: 10),
                       Container(
                         padding: const EdgeInsets.only(left: 10,right: 20,top: 15,bottom: 15),
@@ -302,7 +303,7 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
                             Consumer<AppointmentProvider>(
                                 builder: (BuildContext context, appointmentSnapshot, Widget? child) {
                                   return Text(
-                                  DateFormat('dd-MM-yyyy').format(appointmentSnapshot.bookDate),style: const TextStyle(color: AppColor.appColor)
+                                  DateFormat('dd-MM-yyyy').format(appointmentSnapshot.bookDate),style: const TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular)
                                 );
                               }
                             ),
@@ -314,7 +315,7 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text('Select Time'),
+              const Text('Select Time',style: TextStyle(fontFamily: AppFont.regular),),
               const SizedBox(height: 10),
 
               Row(
@@ -823,7 +824,7 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
                 children: [
                   Container(color: AppColor.appColor,height: 10,width: 10,),
                   const SizedBox(width: 10),
-                  const Text('Available Seat',style: TextStyle(fontSize: 12))
+                  const Text('Available Seat',style: TextStyle(fontSize: 12,fontFamily: AppFont.regular))
                 ],
               ),
               const SizedBox(height: 5),
@@ -831,7 +832,7 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
                 children: [
                   Container(color: AppColor.greyColor,height: 10,width: 10,),
                   const SizedBox(width: 10),
-                  const Text('Not Available Seat',style: TextStyle(fontSize: 12))
+                  const Text('Not Available Seat',style: TextStyle(fontSize: 12,fontFamily: AppFont.regular))
                 ],
               ),
               const SizedBox(height: 5),
@@ -839,7 +840,7 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
                 children: [
                   Container(color: AppColor.beachColor4,height: 10,width: 10,),
                   const SizedBox(width: 10),
-                  const Text('My Booked Seat',style: TextStyle(fontSize: 12))
+                  const Text('My Booked Seat',style: TextStyle(fontSize: 12,fontFamily: AppFont.regular))
                 ],
               ),
               const SizedBox(height: 5),
@@ -847,7 +848,7 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
                 children: [
                   Container(color: AppColor.beachColor2,height: 10,width: 10,),
                   const SizedBox(width: 10),
-                  const Text('Selected Seat',style: TextStyle(fontSize: 12),)
+                  const Text('Selected Seat',style: TextStyle(fontSize: 12,fontFamily: AppFont.regular),)
                 ],
               ),
               const SizedBox(height: 50),

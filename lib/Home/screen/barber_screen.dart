@@ -4,15 +4,28 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../Firebase/firebase_collection.dart';
+import '../../utils/app_font.dart';
 
 class BarberScreen extends StatelessWidget {
   const BarberScreen({Key? key}) : super(key: key);
+
+  String capitalizeAllWord(String value) {
+    var result = value[0].toUpperCase();
+    for (int i = 1; i < value.length; i++) {
+      if (value[i - 1] == " ") {
+        result = result + value[i].toUpperCase();
+      } else {
+        result = result + value[i];
+      }
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Barber'),
+        title: const Text('All Barber',style: TextStyle(fontFamily: AppFont.bold),),
       ),
         body:  SafeArea(
           child: Scaffold(
@@ -23,11 +36,11 @@ class BarberScreen extends StatelessWidget {
                     if(snapshot.connectionState == ConnectionState.waiting){
                       return const Center(child: CircularProgressIndicator());
                     }else if (snapshot.hasError) {
-                      return const Center(child: Text("Something went wrong"));
+                      return const Center(child: Text("Something went wrong",style: TextStyle(fontFamily: AppFont.regular),));
                     } else if (!snapshot.hasData) {
                       return const Center(child: const CircularProgressIndicator());
                     } else if (snapshot.requireData.docChanges.isEmpty){
-                      return const Center(child: Text("No Data Found"));
+                      return const Center(child: Text("No Data Found",style: TextStyle(fontFamily: AppFont.regular),));
                     } else {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,8 +74,8 @@ class BarberScreen extends StatelessWidget {
                                             height: 80,width: 80,fit: BoxFit.fill),
                                       ),
                                       const SizedBox(height: 10),
-                                      Text(snapshot.data?.docs[index]['barberName'],maxLines: 2,overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(color: AppColor.blackColor,fontSize: 12),textAlign:TextAlign.center),
+                                      Text(capitalizeAllWord(snapshot.data?.docs[index]['barberName']),maxLines: 2,overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(color: AppColor.blackColor,fontSize: 12,fontFamily: AppFont.medium),textAlign:TextAlign.center),
                                     ],
                                   ),
                                 ),

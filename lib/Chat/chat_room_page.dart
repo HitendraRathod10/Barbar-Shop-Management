@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../main.dart';
+import '../utils/app_font.dart';
 import 'model/chatroom_model.dart';
 import 'model/message_model.dart';
 
@@ -73,7 +74,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.snapshotUserName.toString()),
+        title: Text(widget.snapshotUserName.toString(),style: TextStyle(fontFamily: AppFont.bold),),
       ),
       body: SafeArea(
         child: Column(
@@ -100,13 +101,13 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                           return GestureDetector(
                             onLongPress: (){
                                 Widget cancelButton = TextButton(
-                                  child: const Text("Cancel",style: TextStyle(color: AppColor.appColor,fontSize: 12),),
+                                  child: const Text("Cancel",style: TextStyle(color: AppColor.appColor,fontSize: 12,fontFamily: AppFont.bold),),
                                   onPressed:  () {
                                     Navigator.pop(context);
                                   },
                                 );
                                 Widget deleteButton = TextButton(
-                                  child: const Text("Delete",style: TextStyle(color: AppColor.appColor,fontSize: 12),),
+                                  child: const Text("Delete",style: TextStyle(color: AppColor.appColor,fontSize: 12,fontFamily: AppFont.bold),),
                                   onPressed:  () async {
                                     Navigator.pop(context);
                                     FirebaseCollection().chatRoomCollection.
@@ -118,8 +119,8 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                                 AlertDialog alert = AlertDialog(
                                   contentPadding : const EdgeInsets.fromLTRB(24.0, 10.0, 24.0, 0.0),
                                   titleTextStyle: const TextStyle(color: AppColor.appColor,fontSize: 16),
-                                  title: const Text("Delete message?"),
-                                  content: const Text("Do you want to delete this message",style: TextStyle(color: AppColor.blackColor,fontSize: 12)),
+                                  title: const Text("Delete message?",style: TextStyle(fontFamily: AppFont.bold),),
+                                  content: const Text("Are you sure want to delete this message?",style: TextStyle(color: AppColor.blackColor,fontSize: 12,fontFamily: AppFont.medium)),
                                   actions: [
                                     cancelButton,
                                     deleteButton,
@@ -165,6 +166,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                                             currentMessage.text.toString(),
                                             style: const TextStyle(
                                               color: Colors.white,
+                                              fontFamily: AppFont.regular
                                             ),
                                           )
                                       ),
@@ -175,7 +177,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                                         DateFormat("hh:mm a").format(DateTime.parse(currentMessage.timeStamp.toString())).toString(),
                                         style: const TextStyle(
                                           color: Colors.grey,
-                                          fontSize: 10
+                                          fontSize: 10, fontFamily: AppFont.regular
                                         ),
                                       )
                                     ],
@@ -189,11 +191,11 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                     }
                     else if(snapshot.hasError) {
                       return const Center(
-                        child: Text("An error occurred! Please check your internet connection."),
+                        child: Text("An error occurred! Please check your internet connection.",style: TextStyle(fontFamily: AppFont.regular),),
                       );
                     } else {
                       return const Center(
-                        child: Text("Say hii"),
+                        child: Text("Say hii",style: TextStyle(fontFamily: AppFont.regular)),
                       );
                     }
                   },
@@ -216,7 +218,8 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                       minLines: 1,
                       decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: "Enter message"
+                          hintText: "Enter message",
+                        hintStyle: TextStyle(fontFamily: AppFont.regular)
                       ),
                     ),
                   ),

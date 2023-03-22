@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/app_color.dart';
+import '../../utils/app_font.dart';
 
 class AppointmentScreen extends StatelessWidget {
   const AppointmentScreen({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class AppointmentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Appointment'),
+        title: const Text('My Appointment',style: TextStyle(fontFamily: AppFont.bold),),
       ),
       body: StreamBuilder(
         stream: FirebaseCollection().bookAppointmentCollection.
@@ -21,7 +22,7 @@ class AppointmentScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting || snapshot.connectionState == ConnectionState.none) {
             return const Center(child: CircularProgressIndicator());
           } else if(snapshot.hasError || snapshot.requireData.docs.isEmpty){
-            return const Center(child: Text('No Appointment'));
+            return const Center(child: Text('No Appointment',style: TextStyle(fontFamily: AppFont.regular),));
           }
           else {
             return ListView.builder(
@@ -55,14 +56,14 @@ class AppointmentScreen extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children:  [
                                       Text(snapshot.data?.docs[index]['shopName'],
-                                          style : const TextStyle(color: AppColor.appColor),maxLines: 1,overflow: TextOverflow.ellipsis),
+                                          style : const TextStyle(color: AppColor.appColor,fontFamily: AppFont.semiBold),maxLines: 1,overflow: TextOverflow.ellipsis),
                                       const SizedBox(height: 2),
                                       Text(snapshot.data?.docs[index]['address'],
-                                          style : const TextStyle(color: AppColor.aquaColor2,fontSize: 10),maxLines: 2,overflow: TextOverflow.ellipsis),
+                                          style : const TextStyle(color: AppColor.aquaColor2,fontSize: 10,fontFamily: AppFont.medium),maxLines: 2,overflow: TextOverflow.ellipsis),
                                       const SizedBox(height: 4),
                                       Text('${snapshot.data?.docs[index]['userAppointmentDate']} '
                                           '${snapshot.data?.docs[index]['userAppointmentTime']}',
-                                          style : const TextStyle(color: AppColor.blackColor,fontSize: 10),maxLines: 2,overflow: TextOverflow.ellipsis),
+                                          style : const TextStyle(color: AppColor.blackColor,fontSize: 10,fontFamily: AppFont.regular),maxLines: 2,overflow: TextOverflow.ellipsis),
                                     ],
                                   ),
                                 ),
@@ -79,17 +80,17 @@ class AppointmentScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text('Services : ',
-                                    style: TextStyle(color: AppColor.appColor,fontWeight: FontWeight.w500),),
+                                    style: TextStyle(color: AppColor.appColor,fontFamily: AppFont.medium),),
                                   const SizedBox(width: 20,),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: const [
-                                      Text('Service Name',style: TextStyle(fontSize: 12),),
+                                      Text('Service Name',style: TextStyle(fontSize: 12,fontFamily: AppFont.regular),),
                                       SizedBox(height: 5),
-                                      Text('Price',style: TextStyle(fontSize: 12),),
+                                      Text('Price',style: TextStyle(fontSize: 12,fontFamily: AppFont.regular),),
                                       SizedBox(height: 5,),
-                                      Text('Discount',style: TextStyle(fontSize: 12)),
+                                      Text('Discount',style: TextStyle(fontSize: 12,fontFamily: AppFont.regular)),
                                     ],
                                   ),
                                 ],
@@ -99,11 +100,11 @@ class AppointmentScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Text('${snapshot.data?.docs[index]['hairCategory']}',style: const TextStyle(fontSize: 12)),
+                                  Text('${snapshot.data?.docs[index]['hairCategory']}',style: const TextStyle(fontSize: 12,fontFamily: AppFont.regular)),
                                   const SizedBox(height: 5),
-                                  Text('₹ ${snapshot.data?.docs[index]['price']}',style: const TextStyle(fontSize: 12)),
+                                  Text('₹ ${snapshot.data?.docs[index]['price']}',style: const TextStyle(fontSize: 12,fontFamily: AppFont.regular)),
                                   const SizedBox(height: 5),
-                                  const Text('0.0%',style: TextStyle(fontSize: 12)),
+                                  const Text('0.0%',style: TextStyle(fontSize: 12,fontFamily: AppFont.regular)),
                                 ],
                               )
                             ],
@@ -113,9 +114,9 @@ class AppointmentScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text('Total',
-                                style: TextStyle(color: AppColor.redColor,fontWeight: FontWeight.w500),),
+                                style: TextStyle(color: AppColor.redColor,fontFamily: AppFont.regular),),
                               Text('₹ ${snapshot.data?.docs[index]['price']}',
-                                style: const TextStyle(color: AppColor.redColor,fontWeight: FontWeight.w500),),
+                                style: const TextStyle(color: AppColor.redColor,fontFamily: AppFont.semiBold),),
                             ],
                           )
                         ],

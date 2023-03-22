@@ -16,9 +16,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/app_font.dart';
 import '../../utils/app_prefrence_key.dart';
 import '../../utils/app_utils.dart';
 import '../provider/loading_provider.dart';
+import 'login_screens_with_tabs.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -77,16 +79,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
       file = compressImage;
     });
   }
-
+  String idGenerator() {
+    final now = DateTime.now();
+    return now.microsecondsSinceEpoch.toString();
+  }
   void uploadFile(context) async {
     if (file == null) return;
-    final fireauth = FirebaseAuth.instance.currentUser?.email;
+    final fireauth = idGenerator();
+    print("fireauth $fireauth");
     final destination = 'images/$fireauth';
+    print("fireauth $destination");
     try {
       final ref = FirebaseStorage.instance.ref().child(destination);
+      print("ref $ref");
       UploadTask uploadsTask =  ref.putFile(file!);
-      final snapshot = await uploadsTask.whenComplete(() {});
-      final imageUrl = await snapshot.ref.getDownloadURL().whenComplete(() {});
+      final snapshot = await uploadsTask.whenComplete(() {
+        print("uploads Task done");
+      });
+      final imageUrl = await snapshot.ref.getDownloadURL().whenComplete(() {
+        print("imageUrl downloaded");
+      });
       User? user = await LoginAuth.registerUsingEmailPassword(
           email: emailController.text,
           password: passwordController.text,
@@ -96,6 +108,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           context: context
       );
       if (user != null) {
+        print("current user ${FirebaseAuth.instance.currentUser!.email}");
+        print("current user ${FirebaseAuth.instance.currentUser!.uid}");
         LoginProvider().addUserDetail(
           uId: FirebaseAuth.instance.currentUser!.uid,
             userName: nameController.text,
@@ -109,11 +123,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
             latitudeShop: '', openingHour: '', coverPageImage: '', contactNumber: '', price: '',
             userType: Provider.of<LoginProvider>(context,listen: false).selectUserType.toString(), closingHour: '').then((value) {
           AppUtils.instance.showToast(toastMessage: "Register Successfully");
-          AppUtils.instance.setPref(PreferenceKey.boolKey, PreferenceKey.prefLogin, true);
-          AppUtils.instance.setPref(PreferenceKey.stringKey, PreferenceKey.prefEmail, emailController.text);
-          Provider.of<LoginProvider>(context,listen:false).getSharedPreferenceData(emailController.text);
+          // AppUtils.instance.setPref(PreferenceKey.boolKey, PreferenceKey.prefLogin, true);
+          // AppUtils.instance.setPref(PreferenceKey.stringKey, PreferenceKey.prefEmail, emailController.text);
+          // Provider.of<LoginProvider>(context,listen:false).getSharedPreferenceData(emailController.text);
           Provider.of<LoadingProvider>(context,listen: false).stopLoading();
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const BottomNavBarScreen()));
+          // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const BottomNavBarScreen()));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginScreensWithTabs()));
         });
 
         //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
@@ -144,13 +159,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     const Text(
                       "Register",
-                      style: TextStyle(fontSize: 24),
+                      style: TextStyle(fontSize: 24,fontFamily: AppFont.bold,),
                     ),
                     const SizedBox(height: 10),
                     const Text(
                       'Please sign up to continue',
                       style: TextStyle(
-                          color: AppColor.greyColor,fontSize: 12
+                          color: AppColor.greyColor,fontSize: 12,fontFamily: AppFont.medium
                       ),
                     ),
                     const SizedBox(height: 40),
@@ -188,7 +203,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text('Full Name',style: TextStyle(color: AppColor.appColor),),
+                    const Text('Full Name',style: TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular),),
                     const SizedBox(height: 5),
                     TextFieldMixin().textFieldWidget(
                         controller: nameController,
@@ -207,7 +222,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
 
                     const SizedBox(height: 20),
-                    const Text('Email',style: TextStyle(color: AppColor.appColor),),
+                    const Text('Email',style: TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular),),
                     const SizedBox(height: 5),
                     TextFieldMixin().textFieldWidget(
                         controller: emailController,
@@ -228,7 +243,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                     ),
                     const SizedBox(height: 20),
-                    const Text('Mobile Number',style: TextStyle(color: AppColor.appColor),),
+                    const Text('Mobile Number',style: TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular),),
                     const SizedBox(height: 5),
                     TextFieldMixin().textFieldWidget(
                       controller: phoneController,
@@ -249,7 +264,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                     ),
                     const SizedBox(height: 20),
-                    const Text('User Type',style: TextStyle(color: AppColor.appColor)),
+                    const Text('User Type',style: TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular)),
                     const SizedBox(height: 5),
                     Consumer<LoginProvider>(
                         builder: (BuildContext context, snapshot, Widget? child) {
@@ -272,7 +287,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               }
                               return null;
                             },
-                            hint: const Text('Select User Type'),
+                            hint: const Text('Select User Type',style: TextStyle(fontFamily: AppFont.regular)),
                             isExpanded: true,
                             isDense: true,
                             style: const TextStyle(color: AppColor.blackColor),
@@ -287,7 +302,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   value: userType,
                                   child: Row(
                                     children: [
-                                      Text(userType,style: const TextStyle(fontSize: 12),)
+                                      Text(userType,style: const TextStyle(fontSize: 12,fontFamily: AppFont.regular),)
                                     ],
                                   )
                               );
@@ -298,7 +313,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
 
                     const SizedBox(height: 20),
-                    const Text('Password',style: TextStyle(color: AppColor.appColor)),
+                    const Text('Password',style: TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular)),
                     const SizedBox(height: 5),
                     TextFieldMixin().textFieldWidget(
                       controller: passwordController,
@@ -332,7 +347,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
 
                     const SizedBox(height: 20),
-                    const Text('Confirm Password',style: TextStyle(color: AppColor.appColor),),
+                    const Text('Confirm Password',style: TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular),),
                     const SizedBox(height: 5),
                     TextFieldMixin().textFieldWidget(
                       controller: confirmPasswordController,
@@ -401,11 +416,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   rating: 0.1, shopName: '', hairCategory: '', currentUser: '',
                                   latitudeShop: '', openingHour: '', coverPageImage: '', contactNumber: '', price: '',
                                   userType : Provider.of<LoginProvider>(context,listen: false).selectUserType.toString(), closingHour: '');
-                              AppUtils.instance.setPref(PreferenceKey.boolKey, PreferenceKey.prefLogin, true);
-                              AppUtils.instance.setPref(PreferenceKey.stringKey, PreferenceKey.prefEmail, emailController.text);
+                              // AppUtils.instance.setPref(PreferenceKey.boolKey, PreferenceKey.prefLogin, true);
+                              // AppUtils.instance.setPref(PreferenceKey.stringKey, PreferenceKey.prefEmail, emailController.text);
                               Provider.of<LoadingProvider>(context,listen: false).stopLoading();
-                              Provider.of<LoginProvider>(context,listen:false).getSharedPreferenceData(emailController.text);
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const BottomNavBarScreen()));
+                              // Provider.of<LoginProvider>(context,listen:false).getSharedPreferenceData(emailController.text);
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginScreensWithTabs()));
+                              // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const BottomNavBarScreen()));
                             }
                           }
                           }
@@ -422,13 +438,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             'Already have an account?  ',
                             style: TextStyle(
                                 decorationThickness: 2,
+                                fontFamily: AppFont.regular,
                                 decoration: TextDecoration.none,
                                 color:AppColor.blackColor),
                           ),
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginScreen()));
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginScreensWithTabs()));
                           },
                           child: const Padding(
                             padding: EdgeInsets.only(bottom: 10,top: 10),
@@ -437,6 +454,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               style: TextStyle(
                                   fontSize: 15,
                                   decoration: TextDecoration.underline,
+                                  fontFamily: AppFont.medium,
                                   decorationThickness: 1,
                                   color:AppColor.appColor),
                             ),

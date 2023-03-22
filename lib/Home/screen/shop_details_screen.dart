@@ -12,6 +12,7 @@ import '../../Chat/model/chatroom_model.dart';
 import '../../Firebase/firebase_collection.dart';
 import '../../main.dart';
 import '../../utils/app_color.dart';
+import '../../utils/app_font.dart';
 import 'direction_screen.dart';
 
 class ShopDetailsScreen extends StatefulWidget{
@@ -28,8 +29,8 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> with SingleTicker
   late TabController controller;
   final ScrollController _scrollController = ScrollController();
   final List<Widget> _tabs = const [
-    Text("About"),
-    Text("Rating"),
+    Text("About",style: TextStyle(fontFamily: AppFont.medium),),
+    Text("Rating",style: TextStyle(fontFamily: AppFont.medium),),
   ];
 
   String? userName,userPhoneNumber,userEmail;
@@ -47,11 +48,25 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> with SingleTicker
     }
   }
 
+  String capitalizeAllWord(String value) {
+    var result = value[0].toUpperCase();
+    for (int i = 1; i < value.length; i++) {
+      if (value[i - 1] == " ") {
+        result = result + value[i].toUpperCase();
+      } else {
+        result = result + value[i];
+      }
+    }
+    return result;
+  }
+
   @override
   void initState() {
     super.initState();
     shopDetailsCheck();
     controller = TabController(length: _tabs.length, vsync: this,initialIndex: 0);
+    print("snapshotData ${widget.snapshotData['shopName']}");
+    print("snapshotData ${widget.snapshotData['rating']}");
   }
 
   @override
@@ -102,19 +117,19 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> with SingleTicker
                               }, icon: ClipOval(
                                 child: Container(
                                     color: AppColor.whiteColor.withOpacity(0.6),
-                                    padding: const EdgeInsets.only(left: 8,right: 5,bottom: 5,top: 5),
+                                    padding: const EdgeInsets.only(left: 9,right: 5,bottom: 5,top: 4),
                                     child: const Icon(Icons.arrow_back_ios,)),
-                              ),color: AppColor.appColor,iconSize: 24),
+                              ),color: AppColor.appColor,iconSize: 20),
 
                               Positioned(
                                 left: 20,bottom: 10,right: 10,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                     Text(widget.snapshotData['shopName'],maxLines: 3,overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(fontWeight: FontWeight.bold,color: AppColor.whiteColor)),
-                                     Text(widget.snapshotData['address'],
-                                        style: const TextStyle(color: AppColor.whiteColor,fontSize: 12)),
+                                     Text(capitalizeAllWord(widget.snapshotData['shopName']),maxLines: 3,overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(fontFamily: AppFont.bold,color: AppColor.whiteColor)),
+                                     Text(capitalizeAllWord(widget.snapshotData['address']),
+                                        style: const TextStyle(color: AppColor.whiteColor,fontSize: 12,fontFamily: AppFont.semiBold)),
                                      const SizedBox(height: 5),
                                     RatingBar.builder(
                                       initialRating: widget.snapshotData['rating'],
@@ -210,9 +225,9 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> with SingleTicker
                                        padding: const EdgeInsets.all(8.0),
                                        child: Column(
                                          children: [
-                                           Image.asset(AppImage.chatNow,height: 30,width: 30),
+                                           Image.network('https://cdn-icons-png.flaticon.com/128/14/14558.png',scale: 5,color: AppColor.appColor),
                                            const SizedBox(height: 5),
-                                           const Text('Chat Now')
+                                           const Text('Chat Now',style: TextStyle(fontFamily: AppFont.regular),)
                                          ],
                                        ),
                                      ),
@@ -231,9 +246,9 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> with SingleTicker
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       children:  [
-                                        Image.asset(AppImage.call,height: 30,width: 30),
+                                        Image.network('https://cdn-icons-png.flaticon.com/128/9637/9637721.png',scale: 5,color: AppColor.appColor,),
                                         const SizedBox(height: 5),
-                                        const Text('Call Now')
+                                        const Text('Call Now',style: TextStyle(fontFamily: AppFont.regular),)
                                       ],
                                     ),
                                   ),
@@ -271,9 +286,9 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> with SingleTicker
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       children:  [
-                                        Image.asset(AppImage.map,height: 30,width: 30),
+                                        Image.network('https://cdn-icons-png.flaticon.com/128/9572/9572876.png',scale: 5,color: AppColor.appColor,),
                                         const SizedBox(height: 5),
-                                        const Text('Direction')
+                                        const Text('Direction',style: TextStyle(fontFamily: AppFont.regular),)
                                       ],
                                     ),
                                   ),
@@ -286,9 +301,9 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> with SingleTicker
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       children:  [
-                                        Image.asset(AppImage.bookNow,height: 30,width: 30),
+                                        Image.network('https://cdn-icons-png.flaticon.com/128/8659/8659110.png',scale: 5,color: AppColor.appColor,),
                                         const SizedBox(height: 5),
-                                        const Text('Book Now')
+                                        const Text('Book Now',style: TextStyle(fontFamily: AppFont.regular),)
                                       ],
                                     ),
                                   ),
@@ -327,7 +342,7 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> with SingleTicker
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(widget.snapshotData['shopDescription'],style: const TextStyle(fontSize: 12)),
+                        Text(widget.snapshotData['shopDescription'],style: const TextStyle(fontSize: 14,fontFamily: AppFont.regular)),
                       ],
                     ),
                   ),

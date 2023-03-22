@@ -2,6 +2,7 @@ import 'package:barber_booking_management/Category/screen/category_shop_details_
 import 'package:barber_booking_management/utils/app_image.dart';
 import 'package:flutter/material.dart';
 import '../utils/app_color.dart';
+import '../utils/app_font.dart';
 import 'model/category_model.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   String gender = 'Male';
   List<ServiceListModel> maleHairCategoryList = <ServiceListModel>[
-    ServiceListModel(serviceName: 'Medium Length',serviceGender: 'Male', serviceImage: AppImage.mediumLength),
+    ServiceListModel(serviceName: 'Medium Length',serviceGender: 'Male', serviceImage: AppImage.medHairMale),
     ServiceListModel(serviceName: 'Bun Cut',serviceGender: 'Male', serviceImage: AppImage.bunCut),
     ServiceListModel(serviceName: 'French Crop',serviceGender: 'Male', serviceImage: AppImage.frenchCrop),
     ServiceListModel(serviceName: 'Faux Hawk',serviceGender: 'Male', serviceImage: AppImage.fauxHawk),
@@ -44,7 +45,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Category'),
+          title: const Text('Category',style: TextStyle(fontFamily: AppFont.bold),),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -53,7 +54,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                const Text('Gender'),
+                const Text('Gender',style: TextStyle(fontFamily: AppFont.regular),),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -64,7 +65,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             gender = index.toString();
                           });
                         }),
-                        const Text('Male')
+                        const Text('Male',style: TextStyle(fontFamily: AppFont.regular),)
                       ],
                     ),
                     Row(
@@ -74,7 +75,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             gender = index.toString();
                           });
                         }),
-                        const Text('Female')
+                        const Text('Female',style: TextStyle(fontFamily: AppFont.regular),)
                       ],
                     ),
                   ],
@@ -130,8 +131,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           margin: const EdgeInsets.only(right: 10,bottom: 10),
                           width: double.infinity,
                           decoration: BoxDecoration(
-                              color: index.isEven ? AppColor.summerColor4.withOpacity(0.3) : AppColor.summerColor2.withOpacity(0.3),
-                              borderRadius: BorderRadius.circular(20)
+                              // color: index.isEven ? AppColor.appColorPink.withOpacity(0.4) : AppColor.appColorPink.withOpacity(0.7),
+                              borderRadius: BorderRadius.circular(20),
+                              gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [AppColor.appColorPink.withOpacity(0.8),AppColor.appColor.withOpacity(0.8)]
+                              )
                           ),
                           child:  Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,11 +152,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     children:  [
                                       Text(
                                           gender == 'Male' ? maleHairCategoryList[index].serviceName : femaleHairCategoryList[index].serviceName,
-                                          style : const TextStyle(color: AppColor.appColor),maxLines: 2,overflow: TextOverflow.ellipsis),
+                                          style : const TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular),maxLines: 2,overflow: TextOverflow.ellipsis),
                                       const SizedBox(height: 2),
                                       Text(
                                           gender == 'Male' ? maleHairCategoryList[index].serviceGender : femaleHairCategoryList[index].serviceGender,
-                                          style : const TextStyle(color: AppColor.aquaColor2,fontSize: 12),maxLines: 2,overflow: TextOverflow.ellipsis),
+                                          style : TextStyle(color: AppColor.appColor.withOpacity(0.9),fontSize: 12,fontFamily: AppFont.regular),maxLines: 2,overflow: TextOverflow.ellipsis),
                                       const SizedBox(height: 4),
                                       GestureDetector(
                                         onTap: (){
@@ -164,7 +170,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               color: AppColor.appColor,
                                               borderRadius: BorderRadius.circular(20)
                                           ),
-                                          child: const Center(child: Text('View Shop',style : TextStyle(color: AppColor.whiteColor))),
+                                          child: const Center(child: Text('View Shop',style : TextStyle(color: AppColor.whiteColor,fontFamily: AppFont.regular))),
                                         ),
                                       )
                                       // const Text('30 Shop',
@@ -178,7 +184,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 child: Image.asset(
                                   gender == 'Male' ? maleHairCategoryList[index].serviceImage :
                                   femaleHairCategoryList[index].serviceImage,
-                                  height: double.infinity,width: 120,fit: BoxFit.fill,),
+                                  height: double.infinity,width: 150,fit: BoxFit.cover,),
                               ),
                             ],
                           ),

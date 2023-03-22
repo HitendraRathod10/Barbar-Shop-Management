@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/app_color.dart';
+import '../../utils/app_font.dart';
 
 class MyShopScreen extends StatelessWidget {
   const MyShopScreen({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class MyShopScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Shop'),
+        title: const Text('My Shop',style: TextStyle(fontFamily: AppFont.bold),),
       ),
       body: StreamBuilder(
         stream: FirebaseCollection().shopCollection.
@@ -24,7 +25,7 @@ class MyShopScreen extends StatelessWidget {
           if(snapshot.connectionState == ConnectionState.waiting || snapshot.connectionState == ConnectionState.none){
             return const Center(child: CircularProgressIndicator());
           } else if(snapshot.requireData.docs.isEmpty){
-            return const Center(child: Text('No Shop'));
+            return const Center(child: Text('No Shop',style: TextStyle(fontFamily: AppFont.regular),));
           }  else {
             return ListView.builder(
                 itemCount: snapshot.data?.docs.length,
@@ -32,9 +33,9 @@ class MyShopScreen extends StatelessWidget {
                 itemBuilder: (context,index){
                   return Card(
                     child: ListTile(
-                      title: Text(snapshot.data?.docs[index]['shopName'],style: const TextStyle(fontSize: 13)),
+                      title: Text(snapshot.data?.docs[index]['shopName'],style: const TextStyle(fontSize: 13,fontFamily: AppFont.regular)),
                       subtitle: Text(snapshot.data?.docs[index]['shopDescription'],
-                          style: const TextStyle(fontSize: 10),maxLines: 2,),
+                          style: const TextStyle(fontSize: 10,fontFamily: AppFont.regular),maxLines: 2,),
                       leading: ClipOval(
                           child: Image.network(
                               snapshot.data?.docs[index]['shopImage'],height: 50,width: 50,fit: BoxFit.fill,)),
@@ -48,7 +49,7 @@ class MyShopScreen extends StatelessWidget {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text("Edit Shop",style: TextStyle(fontSize: 13))
+                                Text("Edit Shop",style: TextStyle(fontSize: 13,fontFamily: AppFont.regular))
                               ],
                             ),
                           ),
@@ -60,7 +61,7 @@ class MyShopScreen extends StatelessWidget {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text("Delete",style: TextStyle(fontSize: 13))
+                                Text("Delete",style: TextStyle(fontSize: 13,fontFamily: AppFont.regular))
                               ],
                             ),
                           ),
@@ -75,13 +76,13 @@ class MyShopScreen extends StatelessWidget {
                             )));
                           } else if (value == 2) {
                             Widget noButton = TextButton(
-                              child: const Text("No",style: TextStyle(color: AppColor.whiteColor,fontSize: 12),),
+                              child: const Text("No",style: TextStyle(color: AppColor.whiteColor,fontSize: 12,fontFamily: AppFont.bold),),
                               onPressed:  () {
                                 Navigator.pop(context);
                               },
                             );
                             Widget yesButton = TextButton(
-                              child: const Text("Yes",style: TextStyle(color: AppColor.whiteColor,fontSize: 12),),
+                              child: const Text("Yes",style: TextStyle(color: AppColor.whiteColor,fontSize: 12,fontFamily: AppFont.bold),),
                               onPressed:  () async {
                                 print('Document Id ${ snapshot.data?.docs[index]['shopName']} ');
                                 print('Document Id ${ snapshot.data?.docs[index]['hairCategory']} ');
@@ -94,8 +95,8 @@ class MyShopScreen extends StatelessWidget {
                             AlertDialog alert = AlertDialog(
                               backgroundColor: AppColor.appColor,
                               titleTextStyle: const TextStyle(color: AppColor.whiteColor,fontSize: 18),
-                              title: const Text("Delete Shop"),
-                              content: const Text("Are you want to sure delete this shop",style: TextStyle(color: AppColor.whiteColor,fontSize: 12)),
+                              title: const Text("Delete Shop",style: TextStyle(fontFamily: AppFont.bold),),
+                              content: const Text("Are sure want to delete this shop?",style: TextStyle(color: AppColor.whiteColor,fontSize: 12,fontFamily: AppFont.medium)),
                               actions: [
                                 noButton,
                                 yesButton,

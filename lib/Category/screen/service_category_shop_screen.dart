@@ -5,15 +5,28 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../Firebase/firebase_collection.dart';
 import '../../utils/app_color.dart';
+import '../../utils/app_font.dart';
 
 class ServiceCategoryScreen extends StatelessWidget {
   const ServiceCategoryScreen({Key? key}) : super(key: key);
+
+  String capitalizeAllWord(String value) {
+    var result = value[0].toUpperCase();
+    for (int i = 1; i < value.length; i++) {
+      if (value[i - 1] == " ") {
+        result = result + value[i].toUpperCase();
+      } else {
+        result = result + value[i];
+      }
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Shop Details'),
+        title: const Text('Shop Details',style: TextStyle(fontFamily: AppFont.bold),),
       ),
       body:  SafeArea(
         child: Scaffold(
@@ -24,11 +37,11 @@ class ServiceCategoryScreen extends StatelessWidget {
                   if(snapshot.connectionState == ConnectionState.waiting){
                     return Center(child: const CircularProgressIndicator());
                   }else if (snapshot.hasError) {
-                    return const Center(child: Text("Something went wrong"));
+                    return const Center(child: Text("Something went wrong",style: TextStyle(fontFamily: AppFont.regular),));
                   } else if (!snapshot.hasData) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.requireData.docChanges.isEmpty){
-                    return const Center(child: Text("No Shop Available"));
+                    return const Center(child: Text("No Shop Available",style: TextStyle(fontFamily: AppFont.regular),));
                   } else{
                     return GridView.builder(
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -65,8 +78,8 @@ class ServiceCategoryScreen extends StatelessWidget {
                                   const SizedBox(height: 10),
                                   Container(
                                     padding: const EdgeInsets.only(left: 5,right: 5),
-                                    child: Text(snapshot.data?.docs[index]['shopName'],
-                                        textAlign:TextAlign.start,maxLines: 2,style: const TextStyle(fontSize: 12),
+                                    child: Text(capitalizeAllWord(snapshot.data?.docs[index]['shopName']),
+                                        textAlign:TextAlign.start,maxLines: 2,style: const TextStyle(fontSize: 12,fontFamily: AppFont.semiBold),
                                       overflow: TextOverflow.ellipsis,),
                                   ),
                                   Container(
@@ -105,7 +118,7 @@ class ServiceCategoryScreen extends StatelessWidget {
                                               }  else{
                                                 return Text(ratingSnapshot.data?.docs.length != 0 ?
                                                 '(${ratingSnapshot.data?.docs.length.toString()} review)' : '',
-                                                  style: const TextStyle(fontSize: 10),);
+                                                  style: const TextStyle(fontSize: 10,fontFamily: AppFont.regular),);
                                               }
                                             }
                                         )
@@ -115,12 +128,12 @@ class ServiceCategoryScreen extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 5,right: 5,top: 3),
                                     child : Text('₹ ${snapshot.data?.docs[index]['price']}',maxLines: 2,overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(color: AppColor.appColor),textAlign:TextAlign.start),
+                                        style: const TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular),textAlign:TextAlign.start),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 5,right: 5,top: 3),
-                                    child: Text(snapshot.data?.docs[index]['address'],maxLines: 2,overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(color: AppColor.blackColor,fontSize: 12),textAlign:TextAlign.start),
+                                    child: Text(capitalizeAllWord(snapshot.data?.docs[index]['address']),maxLines: 2,overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(color: AppColor.blackColor,fontSize: 12,fontFamily: AppFont.regular),textAlign:TextAlign.start),
                                   ),
                                   const SizedBox(height: 5)
                                 ],

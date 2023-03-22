@@ -1,5 +1,6 @@
 class AppImage{
   static const appLogo="assets/images/barber.png";
+  static const appIcon="assets/images/barberIcon.png";
   static const resetPassword="assets/images/reset_password.png";
   static const bookNow="assets/images/travel-agency.png";
   static const website="assets/images/website.png";
@@ -27,6 +28,8 @@ class AppImage{
   static const fringe="assets/images/maleHair/Fringe.png";
   static const manBread="assets/images/maleHair/manBread.png";
   static const mediumLength="assets/images/maleHair/mediumLength.png";
+  static const medTwo="assets/images/maleHair/123.png";
+  static const medHairMale="assets/images/maleHair/medHairMale.png";
   static const pixieCut="assets/images/maleHair/pixieCut.png";
 
 

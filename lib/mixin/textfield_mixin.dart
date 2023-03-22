@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../utils/app_color.dart';
+import '../utils/app_font.dart';
 
 class TextFieldMixin {
   Widget textFieldWidget({TextEditingController? controller,
@@ -30,7 +31,7 @@ class TextFieldMixin {
     return TextFormField(
       readOnly: readOnly,
       cursorColor: Colors.black,
-      style: const TextStyle(fontSize: 13),
+      style: const TextStyle(fontSize: 13,fontFamily: AppFont.regular),
       validator: validator,
       keyboardType: keyboardType,
       controller: controller,
@@ -43,10 +44,10 @@ class TextFieldMixin {
           filled: true,
           labelText: labelText,
           fillColor: AppColor.textFieldColor,
-          labelStyle: TextStyle(color: AppColor.blackColor.withOpacity(0.5)),
+          labelStyle: TextStyle(color: AppColor.blackColor.withOpacity(0.5),fontFamily: AppFont.regular),
           hintText: hintText,
           counterText: counterText,
-          hintStyle: TextStyle(color: AppColor.blackColor.withOpacity(0.5),fontSize: 13),
+          hintStyle: TextStyle(color: AppColor.blackColor.withOpacity(0.5),fontSize: 13,fontFamily: AppFont.regular),
           prefixText: prefixText,
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
@@ -63,7 +64,7 @@ class TextFieldMixin {
               borderRadius: BorderRadius.circular(10)
           ),
           errorStyle: const TextStyle(
-            fontSize: 12.0,
+            fontSize: 12.0,fontFamily: AppFont.regular
           ),
       ),
     );

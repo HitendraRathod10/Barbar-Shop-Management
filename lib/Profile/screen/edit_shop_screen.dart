@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../Appointment/firebase/rating_auth.dart';
+import '../../utils/app_font.dart';
 
 
 class EditShopScreen extends StatefulWidget {
@@ -52,7 +53,7 @@ class _EditShopScreenState extends State<EditShopScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Shop'),
+        title: const Text('Edit Shop',style: TextStyle(fontFamily: AppFont.bold),),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -273,7 +274,7 @@ class _EditShopScreenState extends State<EditShopScreen> {
                                     coverPageImage: widget.snapshotData['coverPageImage'],
                                     barberImage: widget.snapshotData['barberImage'],
                                     shopImage: widget.snapshotData['shopImage'],
-                                    timestamp: Timestamp.now(), shopEmail: shopEmailController.text
+                                    timestamp: Timestamp.now(), shopEmail: shopEmailController.text,bMail: '',bName: '',checkB: false
                                 );
                               }
 

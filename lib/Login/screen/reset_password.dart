@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../mixin/button_mixin.dart';
 import '../../mixin/textfield_mixin.dart';
 import '../../utils/app_color.dart';
+import '../../utils/app_font.dart';
 import '../firebase_auth/login_auth.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
@@ -27,13 +28,13 @@ class ResetPasswordScreen extends StatelessWidget {
                   Image.asset(AppImage.resetPassword,
                       height: 70,width: 70,fit: BoxFit.fill),
                   const SizedBox(height: 15),
-                  const Text('Reset Your Password',style: TextStyle(fontSize: 20)),
+                  const Text('Reset Your Password',style: TextStyle(fontSize: 20,fontFamily: AppFont.bold)),
                   const SizedBox(height: 5,),
                   const Text('Provider your account email for which you want to reset your password',style: TextStyle(
-                    color: AppColor.greyColor,fontSize: 12
+                    color: AppColor.greyColor,fontSize: 12,fontFamily: AppFont.medium
                   ),),
                   const SizedBox(height: 40),
-                  const Text('Email',style: TextStyle(color: AppColor.appColor)),
+                  const Text('Email',style: TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular)),
                   const SizedBox(height: 5),
                   TextFieldMixin().textFieldWidget(
                     controller: emailController,

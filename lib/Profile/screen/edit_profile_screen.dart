@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:barber_booking_management/Login/provider/login_provider.dart';
 import 'package:barber_booking_management/utils/app_color.dart';
+import 'package:barber_booking_management/utils/app_font.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -104,7 +105,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Profile'),
+        title: const Text('Edit Profile',style: TextStyle(fontFamily: AppFont.bold),),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -113,7 +114,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             stream: FirebaseCollection().userCollection.doc(FirebaseAuth.instance.currentUser?.email).snapshots(),
             builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Object?>> snapshot) {
               if (snapshot.hasError) {
-                return const Center(child: Text("Something went wrong"));
+                return const Center(child: Text("Something went wrong",style: TextStyle(fontFamily: AppFont.medium),));
               } else if (!snapshot.hasData || !snapshot.data!.exists) {
                 print('Document does not exist');
                 return const Center(child: CircularProgressIndicator());
@@ -137,7 +138,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 color: AppColor.appColor,
                                 height: 80,width: 80,child: Center(
                                 child: Text('${data['userName']?.substring(0,1).toUpperCase()}',
-                                    style: const TextStyle(color: AppColor.whiteColor,fontSize: 20)),
+                                    style: const TextStyle(color: AppColor.whiteColor,fontSize: 20,fontFamily: AppFont.bold)),
                               ),) :
                               Image.network(
                                   '${data['userImage']}',
@@ -170,7 +171,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.text,
                             hintText: "Enter Name",
-                            prefixIcon: const Icon(Icons.person_outline,color: AppColor.appColor),
+                            prefixIcon: Image.network('https://cdn-icons-png.flaticon.com/128/1077/1077114.png',scale: 5,),
+                            // prefixIcon: const Icon(Icons.person_outline,color: AppColor.appColor),
                             validator: (value) {
                               if (value == null ||
                                   value.isEmpty ||
@@ -205,7 +207,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.phone,
                             hintText: "Enter Phone Number",
-                            prefixIcon: const Icon(Icons.phone_android_outlined,color: AppColor.appColor),
+                            prefixIcon: Image.network('https://cdn-icons-png.flaticon.com/128/9637/9637721.png',scale: 5),
+                            // prefixIcon: const Icon(Icons.phone_android_outlined,color: AppColor.appColor),
                             validator: (value) {
                               if (value == null ||
                                   value.isEmpty ||

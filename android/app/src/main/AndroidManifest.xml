@@ -5,15 +5,17 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
-        android:label="Barber Shop Management"
+        android:label="The Barber Shop - Hair Salon"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false">
 
 
        <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyCdQfxwSzj7TlTsQSy7FeGn9vc8OizKk38"/>
+           android:value="AIzaSyClXwHCDUu_b0EYDSXmNGa5-5JlQwf3Jl0"/>
 
         <activity
             android:name=".MainActivity"

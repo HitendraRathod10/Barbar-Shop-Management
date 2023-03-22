@@ -5,9 +5,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../Category/screen/service_category_shop_screen.dart';
 import '../../utils/app_color.dart';
+import '../../utils/app_font.dart';
 
 class BestSalonServiceWidget extends StatelessWidget {
   const BestSalonServiceWidget({Key? key}) : super(key: key);
+
+  String capitalizeAllWord(String value) {
+    var result = value[0].toUpperCase();
+    for (int i = 1; i < value.length; i++) {
+      if (value[i - 1] == " ") {
+        result = result + value[i].toUpperCase();
+      } else {
+        result = result + value[i];
+      }
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +30,7 @@ class BestSalonServiceWidget extends StatelessWidget {
           if(snapshot.connectionState == ConnectionState.waiting){
             return const CategoryShimmers();
           }else if (snapshot.hasError) {
-            return const Center(child: Text("Something went wrong"));
+            return const Center(child: Text("Something went wrong",style: TextStyle(fontFamily: AppFont.regular),));
           } else if (!snapshot.hasData) {
             return const SizedBox();
           } else if (snapshot.requireData.docChanges.isEmpty){
@@ -39,8 +52,7 @@ class BestSalonServiceWidget extends StatelessWidget {
                                 text: "Best Salon Service",
                                 style: TextStyle(
                                   color: AppColor.appColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16, fontFamily: AppFont.bold
                                 ))
                           ],
                         ),
@@ -51,7 +63,7 @@ class BestSalonServiceWidget extends StatelessWidget {
                         },
                         child: const Padding(
                             padding: EdgeInsets.all(10),
-                            child: Text('View All',style: TextStyle(color: AppColor.greyColor,fontSize: 12))),
+                            child: Text('View All',style: TextStyle(color: AppColor.greyColor,fontSize: 12,fontFamily: AppFont.regular))),
                       )
                     ],
                   ),
@@ -98,7 +110,7 @@ class BestSalonServiceWidget extends StatelessWidget {
                                                   const Icon(Icons.star,color: Colors.amber,size: 20,),
                                                   const SizedBox(width: 2),
                                                   Text('${snapshot.data?.docs[index]['rating'].toString().substring(0,3)}',
-                                                    style: TextStyle(fontSize: 12,color: AppColor.blackColor.withOpacity(0.6)),)
+                                                    style: TextStyle(fontSize: 12,color: AppColor.blackColor.withOpacity(0.6),fontFamily: AppFont.regular),)
                                                 ],
                                               ),
                                             ),
@@ -111,7 +123,7 @@ class BestSalonServiceWidget extends StatelessWidget {
                                                   AppColor.beachColor1 : AppColor.summerColor3
                                               ),
                                               child: Text(snapshot.data?.docs[index]['shopStatus'],
-                                                style: const TextStyle(color: AppColor.whiteColor,fontSize: 12)),
+                                                style: const TextStyle(color: AppColor.whiteColor,fontSize: 12,fontFamily: AppFont.regular)),
                                             )
                                           ],
                                         )
@@ -121,15 +133,15 @@ class BestSalonServiceWidget extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 10),
-                                  child:  Text(snapshot.data?.docs[index]['shopName'],
-                                      style: const TextStyle(color: AppColor.appColor),
+                                  child:  Text(capitalizeAllWord(snapshot.data?.docs[index]['shopName']),
+                                      style: const TextStyle(color: AppColor.appColor,fontFamily: AppFont.medium),
                                       maxLines: 2,overflow: TextOverflow.ellipsis),
                                 ),
                                 const SizedBox(height: 2),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 10,bottom: 10),
                                   child: Text(snapshot.data?.docs[index]['hairCategory'],
-                                    style: const TextStyle(color: AppColor.blackColor,fontSize: 10,overflow: TextOverflow.ellipsis),
+                                    style: const TextStyle(color: AppColor.blackColor,fontSize: 10,overflow: TextOverflow.ellipsis,fontFamily: AppFont.regular),
                                       textAlign:TextAlign.start,maxLines: 1),
                                 ),
                               ],

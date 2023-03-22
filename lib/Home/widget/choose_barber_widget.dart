@@ -6,9 +6,22 @@ import 'package:flutter/material.dart';
 
 import '../../Firebase/firebase_collection.dart';
 import '../../utils/app_color.dart';
+import '../../utils/app_font.dart';
 
 class ChooseBarberWidget extends StatelessWidget {
   const ChooseBarberWidget({Key? key}) : super(key: key);
+
+  String capitalizeAllWord(String value) {
+    var result = value[0].toUpperCase();
+    for (int i = 1; i < value.length; i++) {
+      if (value[i - 1] == " ") {
+        result = result + value[i].toUpperCase();
+      } else {
+        result = result + value[i];
+      }
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +52,7 @@ class ChooseBarberWidget extends StatelessWidget {
                                 style: TextStyle(
                                   color: AppColor.appColor,
                                   fontSize: 16,
-                                  fontWeight: FontWeight.w500,
+                                    fontFamily: AppFont.bold
                                 ))
                           ],
                         ),
@@ -50,7 +63,7 @@ class ChooseBarberWidget extends StatelessWidget {
                         },
                         child: const Padding(
                             padding:  EdgeInsets.all(10),
-                            child: Text('View All',style: TextStyle(color: AppColor.greyColor,fontSize: 12),)),
+                            child: Text('View All',style: TextStyle(color: AppColor.greyColor,fontSize: 12,fontFamily: AppFont.regular),)),
                       )
                     ],
                   ),
@@ -73,12 +86,12 @@ class ChooseBarberWidget extends StatelessWidget {
                               children: [
                                 ClipOval(
                                   child: Image.network(snapshot.data?.docs[index]['barberImage'],
-                                    height: 55,width: 55,fit: BoxFit.fill,
+                                    height: 55,width: 55,fit: BoxFit.cover,
                                   ),
                                 ),
                                 const SizedBox(height: 5,),
-                                Text(snapshot.data?.docs[index]['barberName'],
-                                  style: const TextStyle(fontSize: 10),
+                                Text(capitalizeAllWord(snapshot.data?.docs[index]['barberName']),
+                                  style: const TextStyle(fontSize: 10,fontFamily: AppFont.regular),
                                   textAlign: TextAlign.center,maxLines: 2,overflow: TextOverflow.ellipsis,)
                               ],
                             ),

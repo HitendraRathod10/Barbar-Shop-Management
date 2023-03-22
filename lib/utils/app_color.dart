@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class AppColor {
   static const blackColor = Colors.black;
-  static const appColor = Color(0xFF2D8D79);
+  static const appColor = Color(0xFF4B4446);
+  static const appColorPink = Color(0xffFDE2EA);
+  // static const appColor = Color(0xFF2D8D79);
   static const textFieldColor = Color(0xff65eae7e6);
   static const aquaColor1 = Color(0xFF0B698B);
   static const aquaColor2 = Color(0xFF0396A6);

@@ -9,6 +9,7 @@ import 'package:barber_booking_management/NearBy/current_location.dart';
 import 'package:barber_booking_management/mixin/button_mixin.dart';
 import 'package:barber_booking_management/mixin/textfield_mixin.dart';
 import 'package:barber_booking_management/utils/app_color.dart';
+import 'package:barber_booking_management/utils/app_font.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -212,7 +213,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
             address: addressController.text,
             coverPageImage: coverImageUrl,
             barberImage: barberImageUrl, shopImage: shopImageUrl,
-            timestamp: Timestamp.now(), shopEmail: shopEmailController.text);
+            timestamp: Timestamp.now(), shopEmail: shopEmailController.text,bMail: '',bName: '',checkB: false);
       }
       Navigator.pushAndRemoveUntil(
           context,
@@ -289,7 +290,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Shop Detail'),
+        title: const Text('Shop Detail',style: TextStyle(fontFamily: AppFont.bold),),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -306,7 +307,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.text,
                         hintText: "Enter Shop name",
-                        prefixIcon: const Icon(Icons.shopping_basket_outlined,color: AppColor.appColor,size: 20),
+                        prefixIcon: const Icon(Icons.store_mall_directory,color: AppColor.appColor,size: 20),
                         validator: (value) {
                           if (value == null ||
                               value.isEmpty ||
@@ -448,7 +449,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                             }
                             return null;
                           },
-                          hint: const Text('Select Hair Category',style: TextStyle(fontSize: 13)),
+                          hint: const Text('Select Hair Category',style: TextStyle(fontSize: 13,fontFamily: AppFont.regular)),
                           isExpanded: true,
                           isDense: true,
                           style: TextStyle(color: AppColor.blackColor.withOpacity(0.5),fontSize: 13),
@@ -463,7 +464,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                                 value: leaveName,
                                 child: Row(
                                   children: [
-                                    Text(leaveName)
+                                    Text(leaveName,style: TextStyle(fontFamily: AppFont.regular),)
                                   ],
                                 )
                             );
@@ -488,10 +489,10 @@ class _AddShopScreenState extends State<AddShopScreen> {
                             }
                             return null;
                           },
-                          hint: const Text('Select Gender',style: TextStyle(fontSize: 13)),
+                          hint: const Text('Select Gender',style: TextStyle(fontSize: 13,fontFamily: AppFont.regular)),
                           isExpanded: true,
                           isDense: true,
-                          style: TextStyle(color: AppColor.blackColor.withOpacity(0.5),fontSize: 13),
+                          style: TextStyle(color: AppColor.blackColor.withOpacity(0.5),fontSize: 13,fontFamily: AppFont.regular),
                           icon: const Icon(Icons.arrow_drop_down,color: AppColor.appColor,),
                           onChanged: (String? newValue) {
                             snapshot.selectGender = newValue!;
@@ -503,7 +504,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                                 value: gender,
                                 child: Row(
                                   children: [
-                                    Text(gender)
+                                    Text(gender,style: TextStyle(fontFamily: AppFont.regular),)
                                   ],
                                 )
                             );
@@ -526,7 +527,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                               padding: const EdgeInsets.only(top:15,bottom: 15,left: 10,right: 10),
                               child: Text(pickedOpeningTime == null ? "Opening Hour" :
                               Provider.of<AddShopProvider>(context,listen: false).selectedOpeningTime.format(context),
-                                style: TextStyle(color: AppColor.blackColor.withOpacity(0.5)),),
+                                style: TextStyle(color: AppColor.blackColor.withOpacity(0.5),fontFamily: AppFont.regular),),
                             ),
                           ),
                           GestureDetector(
@@ -541,7 +542,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                               padding: const EdgeInsets.only(top:15,bottom: 15,left: 10,right: 10),
                               child: Text(pickedClosingTime == null ? "Closing Hour" :
                               Provider.of<AddShopProvider>(context,listen: false).selectedClosingTime.format(context),
-                                  style: TextStyle(color: AppColor.blackColor.withOpacity(0.5))),
+                                  style: TextStyle(color: AppColor.blackColor.withOpacity(0.5),fontFamily: AppFont.regular)),
                             ),
                           ),
                         ],
@@ -562,7 +563,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                                     color: AppColor.textFieldColor,
                                     height: MediaQuery.of(context).size.height/8,
                                     width: MediaQuery.of(context).size.height/8,
-                                    child:  Center(child: Text('Pick barber Image',style: TextStyle(color: AppColor.blackColor.withOpacity(0.5)),textAlign: TextAlign.center,))) :
+                                    child:  Center(child: Text('Pick barber Image',style: TextStyle(color: AppColor.blackColor.withOpacity(0.5),fontFamily: AppFont.regular),textAlign: TextAlign.center,))) :
                                 Image.file(
                                   barberFile!,
                                   height: MediaQuery.of(context).size.height/8,
@@ -583,7 +584,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                                     color: AppColor.textFieldColor,
                                     height: MediaQuery.of(context).size.height/8,
                                     width: MediaQuery.of(context).size.height/8,
-                                    child: Center(child: Text('Pick Shop Image',style: TextStyle(color: AppColor.blackColor.withOpacity(0.5)),textAlign: TextAlign.center,))) :
+                                    child: Center(child: Text('Pick Shop Image',style: TextStyle(color: AppColor.blackColor.withOpacity(0.5),fontFamily: AppFont.regular),textAlign: TextAlign.center,))) :
                                 Image.file(
                                   shopImageFile!,
                                   height: MediaQuery.of(context).size.height/8,
@@ -604,7 +605,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                                     color: AppColor.textFieldColor,
                                     height: MediaQuery.of(context).size.height/8,
                                     width: MediaQuery.of(context).size.height/8,
-                                    child: Center(child: Text('Pick Cover Image',style: TextStyle(color: AppColor.blackColor.withOpacity(0.5)),textAlign: TextAlign.center,))) :
+                                    child: Center(child: Text('Pick Cover Image',style: TextStyle(color: AppColor.blackColor.withOpacity(0.5),fontFamily: AppFont.regular),textAlign: TextAlign.center,))) :
                                 Image.file(
                                   coverShopImageFile!,
                                   height: MediaQuery.of(context).size.height/8,
@@ -666,7 +667,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                                                 children: const [
                                                   Icon(Icons.add_location_alt_outlined,color: AppColor.appColor,size: 18,),
                                                   SizedBox(width: 5),
-                                                  Text("Edit From Here",style: TextStyle(fontSize: 12)),
+                                                  Text("Edit From Here",style: TextStyle(fontSize: 12,fontFamily: AppFont.regular)),
                                                 ],
                                               )),
                                           onTap: ()=>

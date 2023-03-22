@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../Firebase/firebase_collection.dart';
 import '../../Home/screen/shop_details_screen.dart';
 import '../../utils/app_color.dart';
+import '../../utils/app_font.dart';
 
 class CategoryShopDetailScreen extends StatefulWidget {
   String gender,hairCategory;
@@ -27,7 +28,7 @@ class _CategoryShopDetailScreenState extends State<CategoryShopDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.hairCategory),
+        title: Text(widget.hairCategory,style: TextStyle(fontFamily: AppFont.bold),),
       ),
       body:StreamBuilder(
           stream: FirebaseCollection().shopCollection.where('gender',isEqualTo: widget.gender).
@@ -36,11 +37,11 @@ class _CategoryShopDetailScreenState extends State<CategoryShopDetailScreen> {
             if(snapshot.connectionState == ConnectionState.waiting){
               return const Center(child: CircularProgressIndicator());
             }else if (snapshot.hasError) {
-              return const Center(child: Text("Something went wrong"));
+              return const Center(child: Text("Something went wrong",style: TextStyle(fontFamily: AppFont.regular),));
             } else if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.requireData.docChanges.isEmpty){
-              return const Center(child: Text("No Shop Available"));
+              return const Center(child: Text("No Shop Available",style: TextStyle(fontFamily: AppFont.regular),));
             } else {
               return Column(
                 children: [
@@ -75,20 +76,20 @@ class _CategoryShopDetailScreenState extends State<CategoryShopDetailScreen> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children:  [
                                         Text(snapshot.data?.docs[index]['shopName'],
-                                            style : const TextStyle(color: AppColor.appColor),maxLines: 2,overflow: TextOverflow.ellipsis),
+                                            style : const TextStyle(color: AppColor.appColor,fontFamily: AppFont.semiBold),maxLines: 2,overflow: TextOverflow.ellipsis),
                                         const SizedBox(height: 2),
                                         Text(snapshot.data?.docs[index]['hairCategory'],
-                                            style : const TextStyle(color: AppColor.aquaColor2,fontSize: 12),maxLines: 1,overflow: TextOverflow.ellipsis),
+                                            style : const TextStyle(color: AppColor.aquaColor2,fontSize: 12,fontFamily: AppFont.medium),maxLines: 1,overflow: TextOverflow.ellipsis),
                                         const SizedBox(height: 4),
                                         Row(
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
                                             const Text('Price',
-                                                style: TextStyle(color: AppColor.blackColor,fontSize: 10),
+                                                style: TextStyle(color: AppColor.blackColor,fontSize: 10,fontFamily: AppFont.regular),
                                                 maxLines: 1,overflow: TextOverflow.ellipsis,textAlign: TextAlign.start),
                                             const SizedBox(width: 5,),
                                             Text('₹${snapshot.data?.docs[index]['price']}',
-                                                style:  const TextStyle(color: AppColor.appColor,fontWeight: FontWeight.bold),
+                                                style:  const TextStyle(color: AppColor.appColor,fontFamily: AppFont.medium),
                                                 maxLines: 1,overflow: TextOverflow.ellipsis,textAlign: TextAlign.start),
                                           ],
                                         ),

@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import '../Firebase/firebase_collection.dart';
 import '../utils/app_color.dart';
+import '../utils/app_font.dart';
 
 class NearbyScreen extends StatefulWidget {
   const NearbyScreen({Key? key}) : super(key: key);
@@ -24,6 +25,18 @@ class _NearbyScreenState extends State<NearbyScreen> {
   void initState() {
     super.initState();
     markerLocation();
+  }
+
+  String capitalizeAllWord(String value) {
+    var result = value[0].toUpperCase();
+    for (int i = 1; i < value.length; i++) {
+      if (value[i - 1] == " ") {
+        result = result + value[i].toUpperCase();
+      } else {
+        result = result + value[i];
+      }
+    }
+    return result;
   }
 
   Future markerLocation() async{
@@ -63,11 +76,11 @@ class _NearbyScreenState extends State<NearbyScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children:  [
                                   const SizedBox(height: 2),
-                                  Text(snapShot.doc.get('shopName'),
-                                      style : const TextStyle(color: AppColor.appColor,fontWeight: FontWeight.bold,fontSize: 16),maxLines: 1,overflow: TextOverflow.ellipsis),
+                                  Text(capitalizeAllWord(snapShot.doc.get('shopName')),
+                                      style : const TextStyle(color: AppColor.appColor,fontWeight: FontWeight.bold,fontSize: 16,fontFamily: AppFont.bold),maxLines: 1,overflow: TextOverflow.ellipsis),
                                   const SizedBox(height: 2),
                                   Text(snapShot.doc.get('hairCategory'),
-                                      style : const TextStyle(fontSize: 12),maxLines: 1,overflow: TextOverflow.ellipsis),
+                                      style : const TextStyle(fontSize: 12,fontFamily: AppFont.regular),maxLines: 1,overflow: TextOverflow.ellipsis),
                                   const SizedBox(height: 4),
                                   Row(
                                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -90,7 +103,7 @@ class _NearbyScreenState extends State<NearbyScreen> {
                                       ),
                                       const SizedBox(width: 5,),
                                       Text('(${snapShot.doc.get('rating').toString().substring(0,3)} review)',
-                                          style:  const TextStyle(fontWeight: FontWeight.w500,fontSize: 12),
+                                          style:  const TextStyle(fontFamily: AppFont.medium,fontSize: 12),
                                           maxLines: 1,overflow: TextOverflow.ellipsis,textAlign: TextAlign.start),
                                     ],
                                   ),

@@ -1,3 +1,4 @@
+import 'package:barber_booking_management/utils/app_font.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,7 +23,7 @@ class AppUtils{
       String msg, {Color? color, int? duration}) {
     return ScaffoldMessenger.of(context!).showSnackBar(
       SnackBar(
-        content: Text(msg),
+        content: Text(msg,style: const TextStyle(fontFamily: AppFont.medium),),
         backgroundColor: color??AppColor.blackColor,
         duration: Duration(seconds: duration ?? 3),
       ),

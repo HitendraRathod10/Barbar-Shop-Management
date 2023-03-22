@@ -11,6 +11,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../Firebase/firebase_collection.dart';
+import '../../utils/app_font.dart';
+import '../../utils/app_image.dart';
 import '../../utils/app_prefrence_key.dart';
 import '../../utils/app_utils.dart';
 import '../firebase_auth/login_auth.dart';
@@ -58,19 +60,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Center(
+                        child:ClipOval(child: Image.asset(AppImage.appIcon,height: 150,width: 150,fit: BoxFit.fill)),
+                      ),
+                      const SizedBox(height: 50),
                       const Text(
                         "Login",
-                        style: TextStyle(fontSize: 24),
+                        style: TextStyle(fontSize: 24,fontFamily: AppFont.bold),
                       ),
                       const SizedBox(height: 10),
                       const Text(
                         'Please sign in to continue',
                         style: TextStyle(
-                            color: AppColor.greyColor,fontSize: 12
+                            color: AppColor.greyColor,fontSize: 12,fontFamily: AppFont.medium
                         ),
                       ),
                       const SizedBox(height: 50),
-                      const Text('Email',style: TextStyle(color: AppColor.appColor)),
+                      const Text('Email',style: TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular)),
                       const SizedBox(height: 5),
                       TextFieldMixin().textFieldWidget(
                         controller: emailController,
@@ -92,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
 
                       const SizedBox(height: 20),
-                      const Text('Password',style: TextStyle(color: AppColor.appColor),),
+                      const Text('Password',style: TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular),),
                       const SizedBox(height: 5),
                       TextFieldMixin().textFieldWidget(
                           controller: passwordController,
@@ -128,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Container(
                             alignment: Alignment.topRight,
                               padding: const EdgeInsets.all(10),
-                              child:  const Text('Reset Password',style: TextStyle(fontSize: 12),))),
+                              child:  const Text('Reset Password',style: TextStyle(fontSize: 12,fontFamily: AppFont.medium),))),
                       const SizedBox(height: 30),
                       GestureDetector(
                           onTap: () async {
@@ -186,12 +192,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               'Need an account?  ',
                               style: TextStyle(
                                   decoration: TextDecoration.none,
+                                  fontFamily: AppFont.regular,
                                   color:AppColor.blackColor),
                             ),
                           ),
                           GestureDetector(
                             onTap: (){
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const RegisterScreen()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>const RegisterScreen()));
                             },
                             child: const Padding(
                               padding: EdgeInsets.only(bottom: 10,top: 10),
@@ -200,6 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: TextStyle(
                                     fontSize: 15,
                                     decoration: TextDecoration.underline,
+                                    fontFamily: AppFont.medium,
                                     decorationThickness: 1,
                                     color:AppColor.appColor),
                               ),

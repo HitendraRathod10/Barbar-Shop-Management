@@ -6,6 +6,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../Firebase/firebase_collection.dart';
 import '../../Appointment/Screen/give_review_screen.dart';
+import '../../utils/app_font.dart';
 
 class ReviewWidget extends StatelessWidget {
 
@@ -40,7 +41,7 @@ class ReviewWidget extends StatelessWidget {
                         Text(
                           'Write a review',
                           style:
-                              TextStyle(color: AppColor.appColor),
+                              TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular),
                         ),
                         Icon(
                           Icons.arrow_forward,
@@ -61,12 +62,12 @@ class ReviewWidget extends StatelessWidget {
                   builder: (context,
                       AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
                     if (snapshot.hasError) {
-                      return const Text('Something went wrong');
+                      return const Text('Something went wrong',style: TextStyle(fontFamily: AppFont.regular),);
                     } else if (snapshot.connectionState ==
                         ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.requireData.docChanges.isEmpty) {
-                      return const Center(child: Text('No review'));
+                      return const Center(child: Text('No review',style: TextStyle(fontFamily: AppFont.regular),));
                     } else if (!snapshot.hasData) {
                       return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.hasData) {
@@ -92,7 +93,7 @@ class ReviewWidget extends StatelessWidget {
                                         color: AppColor.appColor,
                                         height: 50,width: 50,child: Center(
                                         child: Text('${snapshot.data?.docs[index]['userName'].substring(0,1).toUpperCase()}',
-                                            style: const TextStyle(color: AppColor.whiteColor)),
+                                            style: const TextStyle(color: AppColor.whiteColor,fontFamily: AppFont.medium)),
                                       ),) :
                                       Image.network(
                                           '${snapshot.data?.docs[index]['userImage']}',
@@ -105,7 +106,7 @@ class ReviewWidget extends StatelessWidget {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                         Text(snapshot.data?.docs[index]['userName']),
+                                         Text(snapshot.data?.docs[index]['userName'],style: TextStyle(fontFamily: AppFont.regular),),
                                         const SizedBox(
                                           height: 5,
                                         ),
@@ -128,7 +129,7 @@ class ReviewWidget extends StatelessWidget {
                                         ),
                                         const SizedBox(height: 5),
                                         Text(snapshot.data?.docs[index]['userExprience'],
-                                          style: const TextStyle(fontSize: 12,color: AppColor.greyColor),)
+                                          style: const TextStyle(fontSize: 12,color: AppColor.greyColor,fontFamily: AppFont.regular),)
                                       ],
                                     ),
                                   ),

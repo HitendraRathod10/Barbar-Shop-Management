@@ -98,10 +98,19 @@ class AddShopDetailFirebase {
         required String coverPageImage,
         required String barberImage,
         required String shopImage,
-        required Timestamp timestamp
+        required Timestamp timestamp,
+        required bool checkB,
+        required String bMail,
+        required String bName,
       }) async {
+
+    debugPrint("bMail:$bMail bName:$bName checkB:$checkB");
     DocumentReference documentReferencer =
     FirebaseCollection().barberCollection.doc('${FirebaseAuth.instance.currentUser?.email}$barberName');
+
+    DocumentReference documentReferencerForChooseBarber =
+    FirebaseCollection().barberCollection.doc('$bMail$bName');
+
     Map<String, dynamic> data = <String, dynamic>{
       "userName": userName.toString(),
       "uid": uId.toString(),
@@ -135,10 +144,16 @@ class AddShopDetailFirebase {
         shopData.add(result.data());
       }
     });
+    checkB ? await documentReferencerForChooseBarber
+        .set(data)
+        .whenComplete(() => debugPrint("documentReferencerForChooseBarber Added shop Details"))
+        .catchError((e) => debugPrint(e)) :
     await documentReferencer
         .set(data)
         .whenComplete(() => debugPrint("Added shop Details"))
         .catchError((e) => debugPrint(e));
   }
+
+    //new method for update rating in choose your barber widget for that first update the data of barber collection
 
 }

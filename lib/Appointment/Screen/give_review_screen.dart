@@ -7,6 +7,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../Addshop/firebase/add_shop_details.dart';
 import '../../Firebase/firebase_collection.dart';
 import '../../utils/app_color.dart';
+import '../../utils/app_font.dart';
 import '../../utils/app_utils.dart';
 import '../firebase/rating_auth.dart';
 
@@ -41,16 +42,36 @@ class _GiveReviewScreenState extends State<GiveReviewScreen> {
   late Timestamp timestamp;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    methodForTest();
+  }
+  methodForTest()async{
+    var queryUserRatingSnapshots = await FirebaseCollection().userRatingCollection.
+    where('shopName',isEqualTo: widget.snapshotData['shopName']).get();
+    print("queryUserRatingSnapshots $queryUserRatingSnapshots");
+    for (var snapshot in queryUserRatingSnapshots.docChanges) {
+      print("snapshot ${snapshot.doc.get("shopRating")}");
+      ratingList.add(snapshot.doc.get("shopRating"));
+      print("rating list init ${ratingList}");
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.snapshotData['shopName']),
+        title: Text(widget.snapshotData['shopName'],style: TextStyle(fontFamily: AppFont.bold),),
         actions: [
           Visibility(
             visible: buttonVisible,
             child: TextButton(
                onPressed: () async {
                 ratingList.clear();
+                 print("ratingList $ratingList");
+                 print("userRating $userRating");
+                 print("rating $rating");
                 var querySnapShot = await FirebaseCollection().userCollection.
                 where('userEmail',isEqualTo: FirebaseAuth.instance.currentUser?.email).get();
 
@@ -71,22 +92,25 @@ class _GiveReviewScreenState extends State<GiveReviewScreen> {
                       timestamp: Timestamp.now(),
                       userName: snapshot.doc.get('userName'),
                       userImage: snapshot.doc.get('userImage'),
-                  ).then((value) {
+                  ).whenComplete(() async{
                     AppUtils.instance.showToast(toastMessage: 'Your review will be post');
+                    setState(() {});
+                    var queryUserRatingSnapshots = await FirebaseCollection().userRatingCollection.
+                    where('shopName',isEqualTo: widget.snapshotData['shopName']).get();
                     for (var snapshot in queryUserRatingSnapshots.docChanges) {
-                      for(int i = 0;i<1;i++){
+                      // for(int i = 0;i<1;i++){
                         userRating = snapshot.doc.get('shopRating');
                         ratingList.add(snapshot.doc.get('shopRating'));
                         sum = ratingList.reduce((a, b) => a + b);
                         userLength = queryUserRatingSnapshots.docs.length;
                         rating = sum/userLength;
-                        debugPrint('User Rating => $sum = $userLength = $rating = $userRating');
-                        break;
-                      }
+                        // debugPrint('User Rating in for in => $sum = $userLength = $rating = $userRating');
+                        // break;
+                      // }
                     }
                     for(var shopSnapshot in queryShopSnapshots.docChanges){
                       uId = snapshot.doc.get('uid');
-                      userName = snapshot.doc.get('userName');
+                      userName = shopSnapshot.doc.get('userName');
                       shopName = shopSnapshot.doc.get('shopName');
                       shopDescription = shopSnapshot.doc.get('shopDescription');
                       status = shopSnapshot.doc.get('shopStatus');
@@ -123,10 +147,46 @@ class _GiveReviewScreenState extends State<GiveReviewScreen> {
                         address: address, coverPageImage: coverPageImage,
                         barberImage: barberImage, shopImage: shopImage,
                         timestamp: timestamp);
+                    print("edit shop screen ${widget.snapshotData['barberName']}");
+                    print("edit shop screen ${widget.snapshotData['shopEmail']}");
+                    // var barberQuerySnapshot = await FirebaseCollection().barberCollection.
+                    // where('currentUser',isEqualTo: widget.snapshotData['currentUser']).where('barberName',isEqualTo: widget.snapshotData['barberName']).get();
+                    // for(var barberSnapshot in barberQuerySnapshot.docChanges){
+                      print("edit shop screen ${widget.snapshotData['shopEmail']} ${widget.snapshotData['barberName']}");
+                      FirebaseCollection().barberCollection.doc('${widget.snapshotData['shopEmail']}${widget.snapshotData['barberName']}').delete();
+                      AddShopDetailFirebase().addBarberDetail(
+                          uId: uId,
+                          userName: userName,
+                          shopName: shopName,
+                          shopDescription: shopDescription,
+                          rating: rating,
+                          shopEmail: shopEmail,
+                          status: status,
+                          openingHour: openingHour,
+                          closingHour: closingHour,
+                          barberName: barberName,
+                          currentUser: currentUser,
+                          hairCategory: hairCategory,
+                          price: price,
+                          longitudeShop: longitudeShop,
+                          latitudeShop: latitudeShop,
+                          contactNumber: contactNumber,
+                          webSiteUrl: webSiteUrl,
+                          gender: gender,
+                          address: address,
+                          coverPageImage: coverPageImage,
+                          barberImage: barberImage,
+                          shopImage: shopImage,
+                          timestamp: timestamp,
+                          checkB: true,
+                          bName: widget.snapshotData['shopEmail'],
+                          bMail: widget.snapshotData['barberName']
+                      );
+                    // }
                     Navigator.pop(context);
                   });
                 }
-            }, child: const Text('POST',style: TextStyle(color: AppColor.appColor),)),
+            }, child: const Text('POST',style: TextStyle(color: AppColor.blackColor,fontFamily: AppFont.regular),)),
           )
         ],
       ),
@@ -164,7 +224,8 @@ class _GiveReviewScreenState extends State<GiveReviewScreen> {
                                 buttonVisible = true;
                                 ratingList.clear();
                                 userRating = rating;
-                                debugPrint('I am user Rating => $userRating');
+                                debugPrint('first time user Rating in ratingBar => $userRating');
+                                debugPrint('first time user Rating in ratingBar rating list => $ratingList');
                               });
 
                             },
@@ -189,8 +250,8 @@ class _GiveReviewScreenState extends State<GiveReviewScreen> {
                                 userRating = 0;
                                 ratingList.clear();
                                 userRating = rating;
-                                debugPrint('I am user Rating another => $userRating');
-                                debugPrint('I am Firebase Rating  => ${snapshot.data?.docs[0]['shopRating']}');
+                                debugPrint('user Rated already and change it => $userRating');
+                                debugPrint('user Rated already  => ${snapshot.data?.docs[0]['shopRating']}');
                               });
 
                             },
@@ -206,7 +267,7 @@ class _GiveReviewScreenState extends State<GiveReviewScreen> {
               ),
               const SizedBox(height: 20),
               TextFieldMixin().textFieldWidget(
-                hintText: 'Describe your Exprience (Optional)',
+                hintText: 'Describe your experience (Optional)',
                 controller: reviewController
               )
             ],

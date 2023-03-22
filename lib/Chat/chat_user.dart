@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../main.dart';
 import '../utils/app_color.dart';
+import '../utils/app_font.dart';
 import 'chat_room_page.dart';
 import 'model/chatroom_model.dart';
 
@@ -171,19 +172,19 @@ class _ChatUserScreenState extends State<ChatUserScreen> {
                         Text(
                             '${snapshot.data?.docs[index]['userName2']?.substring(0,1).toUpperCase()}'
                             '${snapshot.data?.docs[index]['userName2'].substring(1).toLowerCase()}',
-                            style: const TextStyle(fontSize: 12)
+                            style: const TextStyle(fontSize: 12,fontFamily: AppFont.medium)
                         ) : Text(
                       '${snapshot.data?.docs[index]['userName1']?.substring(0,1).toUpperCase()}'
                     '${snapshot.data?.docs[index]['userName1'].substring(1).toLowerCase()}',
-                    style: const TextStyle(fontSize: 12)
+                    style: const TextStyle(fontSize: 12,fontFamily: AppFont.medium)
                     ),
-                        subtitle: Text(snapshot.data?.docs[index]['lastmessage'], style: const TextStyle(fontSize: 10),maxLines: 1,overflow: TextOverflow.ellipsis,),
+                        subtitle: Text(snapshot.data?.docs[index]['lastmessage'], style: const TextStyle(fontSize: 10,fontFamily: AppFont.medium),maxLines: 1,overflow: TextOverflow.ellipsis,),
                         leading: ClipOval(
                           child: Container(
                             color: AppColor.appColor,
                             height: 40,width: 40,child: Center(
                             child: Text('${snapshot.data?.docs[index]['userName2']?.substring(0,1).toUpperCase()}',
-                                style: const TextStyle(color: AppColor.whiteColor)),
+                                style: const TextStyle(color: AppColor.whiteColor,fontFamily: AppFont.bold)),
                           ))
                         ),
                         trailing: Text('${
@@ -195,7 +196,7 @@ class _ChatUserScreenState extends State<ChatUserScreen> {
                             // snapshot.data?.docs[index]['lastMessageTime'].toString().substring(11,16) :
                             snapshot.data?.docs[index]['lastMessageTime'].toString().substring(0,10)
                         }',
-                                  style: const TextStyle(color: AppColor.greyColor,fontSize: 10)),
+                                  style: const TextStyle(color: AppColor.greyColor,fontSize: 10,fontFamily: AppFont.regular)),
                       ),
                     );
                   }

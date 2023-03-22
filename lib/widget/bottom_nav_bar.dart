@@ -14,6 +14,7 @@ import '../Home/home_screen.dart';
 import '../NearBy/near_by_screen.dart';
 import '../main.dart';
 import '../utils/app_color.dart';
+import '../utils/app_font.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({Key? key}) : super(key: key);
@@ -130,31 +131,31 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
         currentIndex: _selectedIndex,
         backgroundColor: Colors.transparent,
         selectedFontSize: 12,
-        selectedLabelStyle: const TextStyle(color: AppColor.appColor),
-        unselectedLabelStyle: const TextStyle(color: AppColor.blackColor,),
+        selectedLabelStyle: const TextStyle(color: AppColor.appColor,fontFamily: AppFont.bold),
+        unselectedLabelStyle: const TextStyle(color: AppColor.appColor,fontFamily: AppFont.medium),
         selectedItemColor: AppColor.appColor,
         unselectedItemColor: AppColor.appColor,
         onTap: _onItemTapped,
         items:  [
           BottomNavigationBarItem(
               label: "Home",
-              icon:  Image.asset(AppImage.home,height: 22,width: 25,)
+              icon:  Image.network('https://cdn-icons-png.flaticon.com/128/1946/1946436.png',height: 22,width: 25,color: AppColor.appColor),
           ),
           BottomNavigationBarItem(
               label: "Near By",
-              icon: Image.asset(AppImage.nearBy,height: 25,width: 25,)
+              icon: Image.network('https://cdn-icons-png.flaticon.com/128/1216/1216895.png',height: 25,width: 25,color: AppColor.appColor)
           ),
           BottomNavigationBarItem(
               label: "Category",
-              icon: Image.asset(AppImage.categories,height: 24,width: 25,)
+              icon: Image.network('https://cdn-icons-png.flaticon.com/128/561/561184.png',height: 24,width: 25,color: AppColor.appColor)
           ),
           BottomNavigationBarItem(
               label: "Chat",
-              icon: Image.asset(AppImage.chat,height: 24,width: 25,color: AppColor.appColor,)
+              icon: Image.network('https://cdn-icons-png.flaticon.com/128/9131/9131475.png',height: 24,width: 25,color: AppColor.appColor)
           ),
           BottomNavigationBarItem(
               label: "Profile",
-              icon: Image.asset(AppImage.profile,height: 19,width: 25,)
+              icon: Image.network('https://cdn-icons-png.flaticon.com/128/1077/1077114.png',height: 19,width: 25,color: AppColor.appColor)
     ),
         ],
       ),

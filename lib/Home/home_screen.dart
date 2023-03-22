@@ -13,6 +13,7 @@ import '../Addshop/add_shop_screen.dart';
 import '../Firebase/firebase_collection.dart';
 import '../Profile/profile_screen.dart';
 import '../main.dart';
+import '../utils/app_font.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("onBackgroundMessage: $message");
@@ -43,6 +44,18 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  String capitalizeAllWord(String value) {
+    var result = value[0].toUpperCase();
+    for (int i = 1; i < value.length; i++) {
+      if (value[i - 1] == " ") {
+        result = result + value[i].toUpperCase();
+      } else {
+        result = result + value[i];
+      }
+    }
+    return result;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -63,9 +76,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                     height: 100,
                     decoration: BoxDecoration(
-                      color: AppColor.beachColor4.withOpacity(0.1),
+                      // color: AppColor.appColorPink,
                       borderRadius:  const BorderRadius.only(
-                          bottomLeft: Radius.circular(50),bottomRight: Radius.circular(50))
+                          bottomLeft: Radius.circular(50),bottomRight: Radius.circular(50)),
+                        gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [AppColor.appColor,AppColor.appColorPink.withOpacity(0.4)]
+                        )
                     ),
                   ),
                   Positioned(
@@ -82,12 +100,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(userName == null ? '' : 'Hi, $userName'
-                                      ,style: const TextStyle(fontSize: 12),),
+                                    Text(userName == null ? '' : 'Hi, ${capitalizeAllWord(userName!)}'
+                                      ,style: const TextStyle(fontSize: 12,fontFamily: AppFont.bold),),
                                     const SizedBox(height: 3),
                                     Text(hour < 12 ? 'Good Morning' :
                                     hour < 17 ? 'Good Afternoon' : 'Good Evening',
-                                        style: const TextStyle(fontSize: 16,color: AppColor.appColor)),
+                                        style: const TextStyle(fontSize: 16,color: AppColor.appColor,fontFamily: AppFont.bold)),
                                   ],
                                 ),
                               ),
@@ -108,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         color: AppColor.appColor,
                                                         height: 40,width: 40,child: Center(
                                                       child: Text('${userName?.substring(0,1).toUpperCase()}',
-                                                        style: const TextStyle(color: AppColor.whiteColor),
+                                                        style: const TextStyle(color: AppColor.whiteColor,fontFamily: AppFont.regular),
                                                       ),) ):
                                                     userImage != null ? Image.network(
                                                         '$userImage',
@@ -123,10 +141,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       mainAxisAlignment: MainAxisAlignment.start,
                                                       children: [
-                                                        Text('$userName'),
+                                                        Text(capitalizeAllWord(userName!),style: TextStyle(fontFamily: AppFont.regular),),
                                                         const SizedBox(height: 3,),
                                                         Text('${FirebaseAuth.instance.currentUser?.email}'
-                                                          ,style: const TextStyle(fontSize: 12),),
+                                                          ,style: const TextStyle(fontSize: 12,fontFamily: AppFont.regular),),
                                                       ],
                                                     ),
                                                   ),
@@ -143,11 +161,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   width: double.infinity,
                                                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                                                   decoration: BoxDecoration(
-                                                    color: AppColor.beachColor3,
+                                                    color: AppColor.appColor,
                                                     borderRadius: BorderRadius.circular(10)
                                                   ),
                                                   child: const Text('Edit Your Profile',
-                                                  style: TextStyle(fontSize: 12),textAlign: TextAlign.center,),
+                                                  style: TextStyle(fontSize: 12,fontFamily: AppFont.regular,color: AppColor.whiteColor),textAlign: TextAlign.center,),
                                                 )),
                                             const SizedBox(height: 10),
                                           ],
@@ -161,13 +179,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                         color: AppColor.appColor,
                                         height: 40,width: 40,child: Center(
                                       child: Text('${userName?.substring(0,1).toUpperCase()}',
-                                        style: const TextStyle(color: AppColor.whiteColor),
+                                        style: const TextStyle(color: AppColor.whiteColor,fontFamily: AppFont.regular),
                                       ),) ):
                                     userImage != null ? Image.network(
                                         '$userImage',
-                                        height: 40,
-                                        width: 40,
-                                        fit: BoxFit.fill) : const SizedBox()
+                                        height: 55,
+                                        width: 55,
+                                        fit: BoxFit.cover) : const SizedBox()
                                 ),
                               ),
 

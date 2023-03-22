@@ -6,9 +6,22 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../Firebase/firebase_collection.dart';
 import '../../utils/app_color.dart';
+import '../../utils/app_font.dart';
 
 class PopularCategoryWidget extends StatelessWidget {
   const PopularCategoryWidget({Key? key}) : super(key: key);
+
+  String capitalizeAllWord(String value) {
+    var result = value[0].toUpperCase();
+    for (int i = 1; i < value.length; i++) {
+      if (value[i - 1] == " ") {
+        result = result + value[i].toUpperCase();
+      } else {
+        result = result + value[i];
+      }
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +31,7 @@ class PopularCategoryWidget extends StatelessWidget {
           if(snapshot.connectionState == ConnectionState.waiting){
             return const ShopListShimmers();
           }else if (snapshot.hasError) {
-            return const Center(child: Text("Something went wrong"));
+            return const Center(child: Text("Something went wrong",style: TextStyle(fontFamily: AppFont.regular),));
           } else if (!snapshot.hasData) {
             return const SizedBox();
           } else if (snapshot.requireData.docChanges.isEmpty){
@@ -39,7 +52,7 @@ class PopularCategoryWidget extends StatelessWidget {
                                 style: TextStyle(
                                   color: AppColor.appColor,
                                   fontSize: 16,
-                                  fontWeight: FontWeight.w500,
+                                    fontFamily: AppFont.bold
                                 ))
                           ],
                         ),
@@ -88,16 +101,16 @@ class PopularCategoryWidget extends StatelessWidget {
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children:   [
-                                              Text(snapshot.data?.docs[index]['shopName'],
-                                                  style:  const TextStyle(color: AppColor.appColor),maxLines: 2,overflow: TextOverflow.ellipsis),
+                                              Text(capitalizeAllWord(snapshot.data?.docs[index]['shopName']),
+                                                  style:  const TextStyle(color: AppColor.appColor,fontFamily: AppFont.medium),maxLines: 2,overflow: TextOverflow.ellipsis),
                                               const SizedBox(height: 3,),
                                               Row(
                                                 children: [
                                                   ClipOval(child: Container(height: 5,width: 5,color: snapshot.data?.docs[index]['shopStatus'] == 'OPEN' ?
-                                                  AppColor.appColor : AppColor.redColor,)),
-                                                  const SizedBox(width: 5),
+                                                  Colors.green : AppColor.redColor,)),
+                                                  const SizedBox(width: 3),
                                                   Text(' ${snapshot.data?.docs[index]['shopStatus'].toString().toUpperCase()}',
-                                                      style:  const TextStyle(color: AppColor.blackColor,fontSize: 10),maxLines: 2,
+                                                      style:  const TextStyle(color: AppColor.blackColor,fontSize: 10,fontFamily: AppFont.regular),maxLines: 2,
                                                       overflow: TextOverflow.ellipsis,textAlign: TextAlign.start),
                                                 ],
                                               ),
@@ -105,15 +118,15 @@ class PopularCategoryWidget extends StatelessWidget {
                                               Row(
                                                 children: [
                                                   const Icon(Icons.watch_later_outlined,size: 14,color: AppColor.appColor),
-                                                  const SizedBox(width: 5,),
+                                                  const SizedBox(width: 3,),
                                                   Text('${snapshot.data?.docs[index]['openingHour']} - ${snapshot.data?.docs[index]['closingHour']}',
-                                                      style:  const TextStyle(color: AppColor.blackColor,fontSize: 10),maxLines: 2,
+                                                      style:  const TextStyle(color: AppColor.blackColor,fontSize: 10,fontFamily: AppFont.regular),maxLines: 2,
                                                       overflow: TextOverflow.ellipsis,textAlign: TextAlign.start),
                                                 ],
                                               ),
                                               const SizedBox(height: 3),
                                               Text(snapshot.data?.docs[index]['hairCategory'],
-                                                  style: const TextStyle(color: AppColor.blackColor,fontSize: 10),maxLines: 1,
+                                                  style: const TextStyle(color: AppColor.blackColor,fontSize: 10,fontFamily: AppFont.regular),maxLines: 1,
                                                   overflow: TextOverflow.ellipsis,textAlign: TextAlign.start),
                                             ],
                                           ),
@@ -124,14 +137,14 @@ class PopularCategoryWidget extends StatelessWidget {
                                             const Padding(
                                               padding: EdgeInsets.only(top: 2,left: 10),
                                               child: Text('Price',
-                                                  style: TextStyle(color: AppColor.blackColor,fontSize: 10),
+                                                  style: TextStyle(color: AppColor.blackColor,fontSize: 10,fontFamily: AppFont.regular),
                                                   maxLines: 1,overflow: TextOverflow.ellipsis,textAlign: TextAlign.start),
                                             ),
                                             Expanded(
                                               child: Padding(
-                                                padding: const EdgeInsets.only(right: 20,top: 2,left: 10),
+                                                padding: const EdgeInsets.only(right: 20,top: 2,left: 05),
                                                 child: Text('₹${snapshot.data?.docs[index]['price']}',
-                                                    style:  const TextStyle(color: AppColor.appColor,fontWeight: FontWeight.bold),
+                                                    style:  const TextStyle(color: AppColor.appColor,fontFamily: AppFont.bold),
                                                     maxLines: 1,overflow: TextOverflow.ellipsis,textAlign: TextAlign.start),
                                               ),
                                             ),

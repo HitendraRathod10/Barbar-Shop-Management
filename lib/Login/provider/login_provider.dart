@@ -55,6 +55,7 @@ class LoginProvider extends ChangeNotifier{
 
         required Timestamp timestamp
       }) async {
+    print("userEmail login_provider $userEmail");
     DocumentReference documentReferencer =
     FirebaseCollection().userCollection.doc(userEmail);
     Map<String, dynamic> data = <String, dynamic>{
@@ -86,7 +87,7 @@ class LoginProvider extends ChangeNotifier{
       "userType": userType.toString(),
       "timeStamp" : timestamp
     };
-    debugPrint('user data=> $data');
+    debugPrint('user data login_provider => $data');
 
     FirebaseCollection().userCollection.get().then((querySnapshot) {
       for (var result in querySnapshot.docs) {
@@ -96,7 +97,7 @@ class LoginProvider extends ChangeNotifier{
     });
     await documentReferencer
         .set(data)
-        .whenComplete(() => debugPrint("Added user Details"))
+        .whenComplete(() => debugPrint("Added user Details login_provider"))
         .catchError((e) => debugPrint(e));
   }
 }
