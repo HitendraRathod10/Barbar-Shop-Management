@@ -97,6 +97,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                         reverse: true,
                         itemCount: dataSnapshot.docs.length,
                         itemBuilder: (context, index) {
+                          print('sna,.... ${dataSnapshot.docs[index].get('text')}');
                           MessageModel currentMessage = MessageModel.fromMap(dataSnapshot.docs[index].data() as Map<String, dynamic>);
                           return GestureDetector(
                             onLongPress: (){
@@ -173,8 +174,8 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                                       Text(
                                         currentMessage.timeStamp.toString().substring(0,10) !=
                                             DateTime.now().toString().substring(0,10) ?
-                                        DateFormat("dd/MM/yyyy  hh:mm a").format(DateTime.parse(currentMessage.timeStamp.toString())).toString() :
-                                        DateFormat("hh:mm a").format(DateTime.parse(currentMessage.timeStamp.toString())).toString(),
+                                        DateFormat("dd, MMMM  hh:mm a").format(DateTime.parse(currentMessage.timeStamp.toString())).toString() :
+                                        DateFormat("dd, MMMM hh:mm a").format(DateTime.parse(currentMessage.timeStamp.toString())).toString(),
                                         style: const TextStyle(
                                           color: Colors.grey,
                                           fontSize: 10, fontFamily: AppFont.regular

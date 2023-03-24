@@ -65,8 +65,8 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> with SingleTicker
     super.initState();
     shopDetailsCheck();
     controller = TabController(length: _tabs.length, vsync: this,initialIndex: 0);
-    print("snapshotData ${widget.snapshotData['shopName']}");
-    print("snapshotData ${widget.snapshotData['rating']}");
+    print("snapshotData ${widget.snapshotData['currentUser']}");
+    print("snapshotData ${widget.snapshotData['uid']}");
   }
 
   @override

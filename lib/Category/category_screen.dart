@@ -60,7 +60,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   children: [
                     Row(
                       children: [
-                        Radio(value: 'Male', groupValue: gender, onChanged: (index) {
+                        Radio(value: 'Male', groupValue: gender, activeColor: AppColor.appColor,onChanged: (index) {
                           setState((){
                             gender = index.toString();
                           });
@@ -70,7 +70,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     ),
                     Row(
                       children: [
-                        Radio(value: "Female", groupValue: gender, onChanged: (index) {
+                        Radio(value: "Female", groupValue: gender, activeColor: AppColor.appColor, onChanged: (index) {
                           setState((){
                             gender = index.toString();
                           });
