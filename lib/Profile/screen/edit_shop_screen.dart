@@ -14,10 +14,10 @@ import 'package:provider/provider.dart';
 import '../../Appointment/firebase/rating_auth.dart';
 import '../../utils/app_font.dart';
 
-
+//ignore: must_be_immutable
 class EditShopScreen extends StatefulWidget {
 
-  var snapshotData;
+  dynamic snapshotData;
 
   EditShopScreen({Key? key,required this.snapshotData}) : super(key: key);
 
@@ -209,7 +209,7 @@ class _EditShopScreenState extends State<EditShopScreen> {
                               var userQuerySnapshot = await FirebaseCollection().
                               userCollection.where('userEmail',isEqualTo: FirebaseAuth.instance.currentUser?.email).get();
 
-                              print("1111... ${FirebaseAuth.instance.currentUser?.email}  000  ${widget.snapshotData['hairCategory']}");
+                              debugPrint("1111... ${FirebaseAuth.instance.currentUser?.email}  000  ${widget.snapshotData['hairCategory']}");
                               AddShopDetailFirebase().
                               addShopDetail(
                                   shopName: shopNameController.text,
@@ -309,6 +309,7 @@ class _EditShopScreenState extends State<EditShopScreen> {
                                     timestamp: Timestamp.now(),
                                 );
                              }
+                              if (!mounted) return;
                               Navigator.pop(context);
                             }
                           },

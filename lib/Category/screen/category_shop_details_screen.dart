@@ -5,7 +5,7 @@ import '../../Firebase/firebase_collection.dart';
 import '../../Home/screen/shop_details_screen.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_font.dart';
-
+//ignore: must_be_immutable
 class CategoryShopDetailScreen extends StatefulWidget {
   String gender,hairCategory;
   CategoryShopDetailScreen({Key? key,required this.hairCategory,required this.gender}) : super(key: key);
@@ -20,15 +20,15 @@ class _CategoryShopDetailScreenState extends State<CategoryShopDetailScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(widget.hairCategory);
-    print(widget.gender);
+    debugPrint(widget.hairCategory);
+    debugPrint(widget.gender);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.hairCategory,style: TextStyle(fontFamily: AppFont.bold),),
+        title: Text(widget.hairCategory,style: const TextStyle(fontFamily: AppFont.bold),),
       ),
       body:StreamBuilder(
           stream: FirebaseCollection().shopCollection.where('gender',isEqualTo: widget.gender).

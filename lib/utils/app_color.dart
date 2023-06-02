@@ -5,7 +5,7 @@ class AppColor {
   static const appColor = Color(0xFF4B4446);
   static const appColorPink = Color(0xffFDE2EA);
   // static const appColor = Color(0xFF2D8D79);
-  static const textFieldColor = Color(0xff65eae7e6);
+  static const textFieldColor = Color(0xffeae7e6);
   static const aquaColor1 = Color(0xFF0B698B);
   static const aquaColor2 = Color(0xFF0396A6);
   static const aquaColor3 = Color(0xFF9CD3D8);

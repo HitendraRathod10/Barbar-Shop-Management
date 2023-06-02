@@ -149,6 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (user != null) {
                                 AppUtils.instance.setPref(PreferenceKey.boolKey, PreferenceKey.prefLogin, true);
                                 AppUtils.instance.setPref(PreferenceKey.stringKey, PreferenceKey.prefEmail, emailController.text);
+                                if (!mounted) return;
                                 Provider.of<LoginProvider>(context,listen:false).getSharedPreferenceData(emailController.text);
 
                                 var snapshotData = await FirebaseCollection().userCollection.
@@ -173,10 +174,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                       barberImage: data.doc.get('barberImage'), shopImage: data.doc.get('shopImage'),
                                       userType: data.doc.get('userType'), timestamp: data.doc.get('timeStamp'));
                                 }
-
+                                if (!mounted) return;
                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const BottomNavBarScreen()));
                                 Provider.of<LoadingProvider>(context,listen: false).stopLoading();
                               }
+                              if (!mounted) return;
                               Provider.of<LoadingProvider>(context,listen: false).stopLoading();
                             }
                           },

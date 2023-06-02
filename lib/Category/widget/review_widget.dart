@@ -7,12 +7,12 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../Firebase/firebase_collection.dart';
 import '../../Appointment/Screen/give_review_screen.dart';
 import '../../utils/app_font.dart';
-
+//ignore: must_be_immutable
 class ReviewWidget extends StatelessWidget {
 
   ReviewWidget({Key? key, required this.snapshotData,required this.shopName,required this.currentUser}) : super(key: key);
 
-  var snapshotData,shopName,currentUser;
+  dynamic snapshotData,shopName,currentUser;
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -106,7 +106,7 @@ class ReviewWidget extends StatelessWidget {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                         Text(snapshot.data?.docs[index]['userName'],style: TextStyle(fontFamily: AppFont.regular),),
+                                         Text(snapshot.data?.docs[index]['userName'],style: const TextStyle(fontFamily: AppFont.regular),),
                                         const SizedBox(
                                           height: 5,
                                         ),

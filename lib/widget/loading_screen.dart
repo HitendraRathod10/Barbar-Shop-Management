@@ -8,7 +8,7 @@ import '../utils/app_color.dart';
 class Loading extends StatelessWidget {
   final Widget? child;
 
-  const Loading({this.child});
+  const Loading({super.key, this.child});
 
   @override
   Widget build(BuildContext context) {

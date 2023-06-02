@@ -11,16 +11,16 @@ import '../utils/app_font.dart';
 import 'model/chatroom_model.dart';
 import 'model/message_model.dart';
 
-
+//ignore: must_be_immutable
 class ChatRoomPage extends StatefulWidget {
-  final  snapshotUserName,getOpenentUserEmail;
+  dynamic  snapshotUserName,getOpenentUserEmail;
   final ChatRoomModel chatroom;
-  const ChatRoomPage({Key? key, required this.snapshotUserName, required this.chatroom, required this.getOpenentUserEmail}) : super(key: key);
+  ChatRoomPage({Key? key, required this.snapshotUserName, required this.chatroom, required this.getOpenentUserEmail}) : super(key: key);
   @override
-  _ChatRoomPageState createState() => _ChatRoomPageState();
+  ChatRoomPageState createState() => ChatRoomPageState();
 }
 
-class _ChatRoomPageState extends State<ChatRoomPage> {
+class ChatRoomPageState extends State<ChatRoomPage> {
 
   TextEditingController messageController = TextEditingController();
 
@@ -74,7 +74,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.snapshotUserName.toString(),style: TextStyle(fontFamily: AppFont.bold),),
+        title: Text(widget.snapshotUserName.toString(),style: const TextStyle(fontFamily: AppFont.bold),),
       ),
       body: SafeArea(
         child: Column(
@@ -97,7 +97,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                         reverse: true,
                         itemCount: dataSnapshot.docs.length,
                         itemBuilder: (context, index) {
-                          print('sna,.... ${dataSnapshot.docs[index].get('text')}');
+                          debugPrint('sna,.... ${dataSnapshot.docs[index].get('text')}');
                           MessageModel currentMessage = MessageModel.fromMap(dataSnapshot.docs[index].data() as Map<String, dynamic>);
                           return GestureDetector(
                             onLongPress: (){

@@ -73,7 +73,7 @@ class _ChatUserScreenState extends State<ChatUserScreen> {
                               where("participants.${FirebaseAuth.instance.currentUser?.uid}", isEqualTo: true).
                               where("participants.${snapshotData.doc.get('uid')}", isEqualTo: true).get();
 
-                              if(snapshot1.docs.length > 0) {
+                              if(snapshot1.docs.isNotEmpty) {
                                 var docData = snapshot1.docs[0].data();
                                 ChatRoomModel existingChatroom = ChatRoomModel.fromMap(docData as Map<String, dynamic>);
                                 chatRoom = existingChatroom;
@@ -119,7 +119,7 @@ class _ChatUserScreenState extends State<ChatUserScreen> {
                             where("participants.${FirebaseAuth.instance.currentUser?.uid}", isEqualTo: true).
                             where("participants.${snapshotData.doc.get('uid')}", isEqualTo: true).get();
 
-                            if(snapshot1.docs.length > 0) {
+                            if(snapshot1.docs.isNotEmpty) {
                               var docData = snapshot1.docs[0].data();
                               ChatRoomModel existingChatroom = ChatRoomModel.fromMap(docData as Map<String, dynamic>);
                               chatRoom = existingChatroom;
@@ -152,6 +152,7 @@ class _ChatUserScreenState extends State<ChatUserScreen> {
                         ChatRoomModel? chatroomModel = FirebaseAuth.instance.currentUser?.email != snapshot.data?.docs[index]['chatUser1'] ?
                         await getChatroomModel() : await getChatroomModel1();
                         if(chatroomModel != null) {
+                          if (!mounted) return;
                           Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return ChatRoomPage(

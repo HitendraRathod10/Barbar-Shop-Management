@@ -84,8 +84,8 @@ class MyShopScreen extends StatelessWidget {
                             Widget yesButton = TextButton(
                               child: const Text("Yes",style: TextStyle(color: AppColor.whiteColor,fontSize: 12,fontFamily: AppFont.bold),),
                               onPressed:  () async {
-                                print('Document Id ${ snapshot.data?.docs[index]['shopName']} ');
-                                print('Document Id ${ snapshot.data?.docs[index]['hairCategory']} ');
+                                debugPrint('Document Id ${ snapshot.data?.docs[index]['shopName']} ');
+                                debugPrint('Document Id ${ snapshot.data?.docs[index]['hairCategory']} ');
                                 await FirebaseCollection().shopCollection.
                                 doc('${snapshot.data?.docs[index]['currentUser']}'
                                     '${snapshot.data?.docs[index]['hairCategory']}')

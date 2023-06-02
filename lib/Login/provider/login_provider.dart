@@ -55,7 +55,7 @@ class LoginProvider extends ChangeNotifier{
 
         required Timestamp timestamp
       }) async {
-    print("userEmail login_provider $userEmail");
+    debugPrint("userEmail login_provider $userEmail");
     DocumentReference documentReferencer =
     FirebaseCollection().userCollection.doc(userEmail);
     Map<String, dynamic> data = <String, dynamic>{

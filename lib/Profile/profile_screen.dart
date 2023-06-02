@@ -7,9 +7,7 @@ import 'package:barber_booking_management/utils/app_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../Login/provider/login_provider.dart';
-import '../Login/screen/login_screen.dart';
 import '../Login/screen/login_screens_with_tabs.dart';
 import '../utils/app_color.dart';
 import '../utils/app_utils.dart';
@@ -124,7 +122,7 @@ class ProfileScreen extends StatelessWidget {
                                             const SizedBox(
                                               width: 10,
                                             ),
-                                            Text("Edit Profile",style: TextStyle(fontSize: 13,fontFamily: AppFont.regular))
+                                            const Text("Edit Profile",style: TextStyle(fontSize: 13,fontFamily: AppFont.regular))
                                           ],
                                         ),
                                       ),
@@ -158,10 +156,10 @@ class ProfileScreen extends StatelessWidget {
                                           children: [
                                             Image.network('https://cdn-icons-png.flaticon.com/128/4212/4212182.png',scale: 5,),
                                             // Icon(Icons.logout,color: AppColor.appColor,size: 20,),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 10,
                                             ),
-                                            Text("Logout",style: TextStyle(fontSize: 13,fontFamily: AppFont.regular))
+                                            const Text("Logout",style: TextStyle(fontSize: 13,fontFamily: AppFont.regular))
                                           ],
                                         ),
                                       ),
@@ -326,10 +324,10 @@ class ProfileScreen extends StatelessWidget {
                                           children: [
                                             Image.network('https://cdn-icons-png.flaticon.com/128/8188/8188360.png',scale: 5),
                                             // Icon(Icons.person_outline,color: AppColor.appColor,size: 20),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 10,
                                             ),
-                                            Text("Edit Profile",style: TextStyle(fontSize: 13,fontFamily: AppFont.regular))
+                                            const Text("Edit Profile",style: TextStyle(fontSize: 13,fontFamily: AppFont.regular))
                                           ],
                                         ),
                                       ),
@@ -352,10 +350,10 @@ class ProfileScreen extends StatelessWidget {
                                           children: [
                                             Image.network('https://cdn-icons-png.flaticon.com/128/4212/4212182.png',scale: 5,),
                                             // Icon(Icons.logout,color: AppColor.appColor,size: 20,),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 10,
                                             ),
-                                            Text("Logout",style: TextStyle(fontSize: 13,fontFamily: AppFont.regular))
+                                            const Text("Logout",style: TextStyle(fontSize: 13,fontFamily: AppFont.regular))
                                           ],
                                         ),
                                       ),

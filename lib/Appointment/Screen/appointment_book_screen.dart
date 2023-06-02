@@ -12,10 +12,10 @@ import '../../utils/app_color.dart';
 import '../../Category/provider/appointment_provider.dart';
 import '../../utils/app_font.dart';
 import '../firebase/book_appointment.dart';
-
+//ignore: must_be_immutable
 class AppointmentBookScreen extends StatefulWidget {
 
-  var snapshotData,userEmail,userMobile;
+  dynamic snapshotData,userEmail,userMobile;
   AppointmentBookScreen({Key? key,required this.snapshotData,required this.userEmail,
   required this.userMobile}) : super(key: key);
 
@@ -41,6 +41,7 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
         lastDate: DateTime(2101));
+    if (!mounted) return;
     if (pickedDate != null && pickedDate != Provider.of<AppointmentProvider>(context,listen: false).bookDate) {
       setState(() {
         Provider.of<AppointmentProvider>(context, listen: false).bookDate = pickedDate!;
@@ -93,6 +94,7 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
     debugPrint('Success Response: $response');
     var userSnapShotData = await FirebaseCollection().userCollection.where('userEmail', isEqualTo: FirebaseAuth.instance.currentUser?.email).get();
     for(var snapshotData in userSnapShotData.docs){
+      if (!mounted) return;
       BookAppointment().bookAppointment(
           shopName: widget.snapshotData['shopName'], shopDescription: widget.snapshotData['shopDescription'],
           shopEmail: widget.snapshotData['shopEmail'], barberName: widget.snapshotData['barberName'],
@@ -109,6 +111,7 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
           timestamp: Timestamp.now());
     }
     //showAlertDialog(context);
+    if (!mounted) return;
     showDialog(context: context, builder: (BuildContext context){
       return AlertDialog(
         buttonPadding : const EdgeInsets.fromLTRB(0, 20.0, 0.0,0),
@@ -235,7 +238,7 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
                   width: double.infinity,height: 170,fit: BoxFit.fill),
               ),
               const SizedBox(height: 5),
-              Text('${widget.snapshotData['shopName']}',maxLines: 1,overflow: TextOverflow.ellipsis,style: TextStyle(fontFamily: AppFont.semiBold),),
+              Text('${widget.snapshotData['shopName']}',maxLines: 1,overflow: TextOverflow.ellipsis,style: const TextStyle(fontFamily: AppFont.semiBold),),
               const SizedBox(height: 2),
               RatingBar.builder(
                 initialRating: widget.snapshotData['rating'],

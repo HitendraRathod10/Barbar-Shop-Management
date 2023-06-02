@@ -5,7 +5,7 @@ import '../../mixin/textfield_mixin.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_font.dart';
 import '../firebase_auth/login_auth.dart';
-
+//ignore: must_be_immutable
 class ResetPasswordScreen extends StatelessWidget {
   ResetPasswordScreen({Key? key}) : super(key: key);
 

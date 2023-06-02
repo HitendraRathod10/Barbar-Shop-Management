@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../utils/app_image.dart';
-
 class BarberShimmers extends StatelessWidget {
   const BarberShimmers({Key? key}) : super(key: key);
 

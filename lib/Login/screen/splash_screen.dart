@@ -7,7 +7,6 @@ import '../../utils/app_font.dart';
 import '../../utils/app_image.dart';
 import '../../utils/app_prefrence_key.dart';
 import '../../utils/app_utils.dart';
-import 'login_screen.dart';
 import 'login_screens_with_tabs.dart';
 
 class SplashScreen extends StatefulWidget {

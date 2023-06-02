@@ -70,6 +70,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
     );
     if(result == null) return;
     final filePath = result.files.single.path;
+    if (!mounted) return;
     File compressImage = await Provider.of<AddShopProvider>(context,listen: false).imageSizeCompress(image: File(filePath!));
     setState(() {
       barberFile = compressImage;
@@ -84,6 +85,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
     );
     if(result == null) return;
     final filePath = result.files.single.path;
+    if (!mounted) return;
     File compressImage = await Provider.of<AddShopProvider>(context,listen: false).imageSizeCompress(image: File(filePath!));
     setState(() {
       coverShopImageFile = compressImage;
@@ -98,6 +100,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
     );
     if(result == null) return;
     final filePath = result.files.single.path;
+    if (!mounted) return;
     File compressImage = await Provider.of<AddShopProvider>(context,listen: false).imageSizeCompress(image: File(filePath!));
     setState(() {
       shopImageFile = compressImage;
@@ -107,12 +110,12 @@ class _AddShopScreenState extends State<AddShopScreen> {
 
   void uploadFile(context) async {
     Provider.of<LoadingProvider>(context,listen: false).startLoading();
-    var providerData = Provider.of<AddShopProvider>(context,listen: false);
+    // var providerData = Provider.of<AddShopProvider>(context,listen: false);
     //Store Image in firebase database
     if (barberFile == null) return;
-    final barberImageDestination = 'barber/${barberImageName}';
-    final shopDestination = 'shop/${shopImageName}';
-    final shopCoverDestination = 'coverShop/${coverShopImageName}';
+    final barberImageDestination = 'barber/$barberImageName';
+    final shopDestination = 'shop/$shopImageName';
+    final shopCoverDestination = 'coverShop/$coverShopImageName';
     try {
       final barberRef = FirebaseStorage.instance.ref().child(barberImageDestination);
       final shopRef = FirebaseStorage.instance.ref().child(shopDestination);
@@ -245,7 +248,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
           );
         }
     );
-
+    if (!mounted) return;
     if (pickedOpeningTime != null && pickedOpeningTime != Provider.of<AddShopProvider>(context,listen: false).selectedOpeningTime ) {
       Provider.of<AddShopProvider>(context,listen: false).selectedOpeningTime = pickedOpeningTime!;
       setState((){});
@@ -271,7 +274,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
           );
         }
     );
-
+    if (!mounted) return;
     if (pickedClosingTime != null && pickedClosingTime != Provider.of<AddShopProvider>(context,listen: false).selectedClosingTime ) {
       Provider.of<AddShopProvider>(context,listen: false).selectedClosingTime = pickedClosingTime!;
       setState((){});
@@ -464,7 +467,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                                 value: leaveName,
                                 child: Row(
                                   children: [
-                                    Text(leaveName,style: TextStyle(fontFamily: AppFont.regular),)
+                                    Text(leaveName,style: const TextStyle(fontFamily: AppFont.regular),)
                                   ],
                                 )
                             );
@@ -504,7 +507,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                                 value: gender,
                                 child: Row(
                                   children: [
-                                    Text(gender,style: TextStyle(fontFamily: AppFont.regular),)
+                                    Text(gender,style: const TextStyle(fontFamily: AppFont.regular),)
                                   ],
                                 )
                             );

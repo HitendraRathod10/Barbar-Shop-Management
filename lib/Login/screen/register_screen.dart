@@ -2,12 +2,10 @@ import 'dart:io';
 import 'package:barber_booking_management/Addshop/provider/add_shop_provider.dart';
 import 'package:barber_booking_management/Login/firebase_auth/login_auth.dart';
 import 'package:barber_booking_management/Login/provider/login_provider.dart';
-import 'package:barber_booking_management/Login/screen/login_screen.dart';
 import 'package:barber_booking_management/mixin/button_mixin.dart';
 import 'package:barber_booking_management/mixin/textfield_mixin.dart';
 import 'package:barber_booking_management/utils/app_color.dart';
 import 'package:barber_booking_management/utils/app_image.dart';
-import 'package:barber_booking_management/widget/bottom_nav_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,7 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/app_font.dart';
-import '../../utils/app_prefrence_key.dart';
 import '../../utils/app_utils.dart';
 import '../provider/loading_provider.dart';
 import 'login_screens_with_tabs.dart';
@@ -86,18 +83,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void uploadFile(context) async {
     if (file == null) return;
     final fireauth = idGenerator();
-    print("fireauth $fireauth");
+    debugPrint("fireauth $fireauth");
     final destination = 'images/$fireauth';
-    print("fireauth $destination");
+    debugPrint("fireauth $destination");
     try {
       final ref = FirebaseStorage.instance.ref().child(destination);
-      print("ref $ref");
+      debugPrint("ref $ref");
       UploadTask uploadsTask =  ref.putFile(file!);
       final snapshot = await uploadsTask.whenComplete(() {
-        print("uploads Task done");
+        debugPrint("uploads Task done");
       });
       final imageUrl = await snapshot.ref.getDownloadURL().whenComplete(() {
-        print("imageUrl downloaded");
+        debugPrint("imageUrl downloaded");
       });
       User? user = await LoginAuth.registerUsingEmailPassword(
           email: emailController.text,
@@ -108,8 +105,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           context: context
       );
       if (user != null) {
-        print("current user ${FirebaseAuth.instance.currentUser!.email}");
-        print("current user ${FirebaseAuth.instance.currentUser!.uid}");
+        debugPrint("current user ${FirebaseAuth.instance.currentUser!.email}");
+        debugPrint("current user ${FirebaseAuth.instance.currentUser!.uid}");
         LoginProvider().addUserDetail(
           uId: FirebaseAuth.instance.currentUser!.uid,
             userName: nameController.text,
@@ -404,6 +401,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             );
                             if (user != null) {
                               AppUtils.instance.showToast(toastMessage: "Register Successfully");
+                              if (!mounted) return;
                               LoginProvider().addUserDetail(
                                   userName: nameController.text,
                                   fcmToken: fcmToken.toString(),
@@ -433,7 +431,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Padding(
-                          padding: const EdgeInsets.only(bottom: 10,top: 10),
+                          padding: EdgeInsets.only(bottom: 10,top: 10),
                           child: Text(
                             'Already have an account?  ',
                             style: TextStyle(

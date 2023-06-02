@@ -11,7 +11,7 @@ class PushNotification extends ChangeNotifier{
 
   getToken() async {
     token = (await FirebaseMessaging.instance.getToken())!;
-    print('Token => $token');
+    debugPrint('Token => $token');
   }
 
   getNotification(context) {
@@ -24,7 +24,7 @@ class PushNotification extends ChangeNotifier{
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
+      // AndroidNotification? android = message.notification?.android;
 
       // DarwinNotificationDetails? ios = message.notification?.apple as DarwinNotificationDetails?;
 
@@ -53,8 +53,8 @@ class PushNotification extends ChangeNotifier{
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
+      // RemoteNotification? notification = message.notification;
+      // AndroidNotification? android = message.notification?.android;
       // DarwinNotificationDetails? ios = message.notification?.apple as DarwinNotificationDetails?;
     });
     getToken();

@@ -38,7 +38,7 @@ class BarberScreen extends StatelessWidget {
                     }else if (snapshot.hasError) {
                       return const Center(child: Text("Something went wrong",style: TextStyle(fontFamily: AppFont.regular),));
                     } else if (!snapshot.hasData) {
-                      return const Center(child: const CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.requireData.docChanges.isEmpty){
                       return const Center(child: Text("No Data Found",style: TextStyle(fontFamily: AppFont.regular),));
                     } else {

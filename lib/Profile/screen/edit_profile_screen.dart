@@ -93,11 +93,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               userType: data.doc.get('userType'), timestamp: data.doc.get('timeStamp'));
           AppUtils.instance.showToast(toastMessage: "Update Profile");
         }
+        if (!mounted) return;
         Provider.of<LoadingProvider>(context,listen: false).stopLoading();
         Navigator.pop(context);
         debugPrint("Image URL = $imageUrl");
       } catch (e) {
-        print('Failed to upload image');
+        debugPrint('Failed to upload image');
         Provider.of<LoadingProvider>(context,listen: false).stopLoading();
 
       }
@@ -116,7 +117,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               if (snapshot.hasError) {
                 return const Center(child: Text("Something went wrong",style: TextStyle(fontFamily: AppFont.medium),));
               } else if (!snapshot.hasData || !snapshot.data!.exists) {
-                print('Document does not exist');
+                debugPrint('Document does not exist');
                 return const Center(child: CircularProgressIndicator());
               }
               else if(snapshot.requireData.exists){

@@ -35,7 +35,7 @@ class ServiceCategoryScreen extends StatelessWidget {
                 stream: FirebaseCollection().shopCollection.snapshots(),
                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Object?>> snapshot)  {
                   if(snapshot.connectionState == ConnectionState.waiting){
-                    return Center(child: const CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }else if (snapshot.hasError) {
                     return const Center(child: Text("Something went wrong",style: TextStyle(fontFamily: AppFont.regular),));
                   } else if (!snapshot.hasData) {
@@ -116,7 +116,7 @@ class ServiceCategoryScreen extends StatelessWidget {
                                               } else if (snapshot.requireData.docChanges.isEmpty){
                                                 return const SizedBox();
                                               }  else{
-                                                return Text(ratingSnapshot.data?.docs.length != 0 ?
+                                                return Text(ratingSnapshot.data!.docs.isNotEmpty ?
                                                 '(${ratingSnapshot.data?.docs.length.toString()} review)' : '',
                                                   style: const TextStyle(fontSize: 10,fontFamily: AppFont.regular),);
                                               }

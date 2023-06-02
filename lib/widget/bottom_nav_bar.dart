@@ -1,5 +1,4 @@
 import 'package:barber_booking_management/Profile/profile_screen.dart';
-import 'package:barber_booking_management/utils/app_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -58,7 +57,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
               where("participants.${FirebaseAuth.instance.currentUser?.uid}", isEqualTo: true).
               where("participants.${snapshotData.doc.get('uid')}", isEqualTo: true).get();
 
-              if(snapshot1.docs.length > 0) {
+              if(snapshot1.docs.isNotEmpty) {
                 var docData = snapshot1.docs[0].data();
                 ChatRoomModel existingChatroom = ChatRoomModel.fromMap(docData as Map<String, dynamic>);
                 chatRoom = existingChatroom;
@@ -93,6 +92,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
         debugPrint('Email => ${message.data.values.last}');
 
         if(chatroomModel != null) {
+          if (!mounted) return;
           Navigator.push(context, MaterialPageRoute(
               builder: (context) {
                 return ChatRoomPage(

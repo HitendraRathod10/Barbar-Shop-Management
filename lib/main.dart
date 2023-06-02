@@ -11,15 +11,13 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'Category/provider/appointment_provider.dart';
-import 'Chat/notification/push_notification.dart';
-import 'Profile/profile_screen.dart';
 
-var uuid = Uuid();
+var uuid = const Uuid();
 
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print('Handling a background message ${message.messageId}');
+  debugPrint('Handling a background message ${message.messageId}');
 }
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(

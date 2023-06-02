@@ -1,5 +1,3 @@
-import 'package:barber_booking_management/Chat/chat_screen.dart';
-import 'package:barber_booking_management/utils/app_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +11,10 @@ import '../../Firebase/firebase_collection.dart';
 import '../../main.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_font.dart';
-import 'direction_screen.dart';
-
+//ignore: must_be_immutable
 class ShopDetailsScreen extends StatefulWidget{
 
-  var snapshotData;
+  dynamic snapshotData;
   ShopDetailsScreen({Key? key,required this.snapshotData}) : super(key: key);
 
   @override
@@ -65,8 +62,8 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> with SingleTicker
     super.initState();
     shopDetailsCheck();
     controller = TabController(length: _tabs.length, vsync: this,initialIndex: 0);
-    print("snapshotData ${widget.snapshotData['currentUser']}");
-    print("snapshotData ${widget.snapshotData['uid']}");
+    debugPrint("snapshotData ${widget.snapshotData['currentUser']}");
+    debugPrint("snapshotData ${widget.snapshotData['uid']}");
   }
 
   @override
@@ -178,7 +175,7 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> with SingleTicker
                                          where("participants.${FirebaseAuth.instance.currentUser?.uid}", isEqualTo: true).
                                          where("participants.${widget.snapshotData['uid']}", isEqualTo: true).get();
 
-                                         if(snapshot1.docs.length > 0) {
+                                         if(snapshot1.docs.isNotEmpty) {
                                            var docData = snapshot1.docs[0].data();
                                            ChatRoomModel existingChatroom = ChatRoomModel.fromMap(docData as Map<String, dynamic>);
                                            chatRoom = existingChatroom;
@@ -208,6 +205,7 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> with SingleTicker
 
                                        ChatRoomModel? chatroomModel = await getChatroomModel();
                                        if(chatroomModel != null) {
+                                         if (!mounted) return;
                                          Navigator.push(context, MaterialPageRoute(
                                              builder: (context) {
                                                return ChatRoomPage(
@@ -259,11 +257,19 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> with SingleTicker
                                     final String googleMapsUrl = "comgooglemaps://?center=${widget.snapshotData['latitude']},${widget.snapshotData['longitude']}";
                                     final String appleMapsUrl = "https://maps.apple.com/?q=${widget.snapshotData['latitude']},${widget.snapshotData['longitude']}";
 
-                                    if (await canLaunch(googleMapsUrl)) {
-                                      await launch(googleMapsUrl);
+                                    // if (await canLaunch(googleMapsUrl)) {
+                                    //   await launch(googleMapsUrl);
+                                    // }
+                                    // if (await canLaunch(appleMapsUrl)) {
+                                    //   await launch(appleMapsUrl, forceSafariVC: false);
+                                    // } else {
+                                    //   throw "Couldn't launch URL";
+                                    // }
+                                    if (await canLaunchUrl(Uri.parse(googleMapsUrl))) {
+                                      await launchUrl(Uri.parse(googleMapsUrl));
                                     }
-                                    if (await canLaunch(appleMapsUrl)) {
-                                      await launch(appleMapsUrl, forceSafariVC: false);
+                                    if (await canLaunchUrl(Uri.parse(appleMapsUrl))) {
+                                      await launchUrl(Uri.parse(appleMapsUrl));
                                     } else {
                                       throw "Couldn't launch URL";
                                     }

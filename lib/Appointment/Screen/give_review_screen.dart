@@ -10,9 +10,9 @@ import '../../utils/app_color.dart';
 import '../../utils/app_font.dart';
 import '../../utils/app_utils.dart';
 import '../firebase/rating_auth.dart';
-
+//ignore: must_be_immutable
 class GiveReviewScreen extends StatefulWidget {
-  var snapshotData;
+  dynamic snapshotData;
   GiveReviewScreen({Key? key,required this.snapshotData}) : super(key: key);
 
   @override
@@ -50,11 +50,11 @@ class _GiveReviewScreenState extends State<GiveReviewScreen> {
   methodForTest()async{
     var queryUserRatingSnapshots = await FirebaseCollection().userRatingCollection.
     where('shopName',isEqualTo: widget.snapshotData['shopName']).get();
-    print("queryUserRatingSnapshots $queryUserRatingSnapshots");
+    debugPrint("queryUserRatingSnapshots $queryUserRatingSnapshots");
     for (var snapshot in queryUserRatingSnapshots.docChanges) {
-      print("snapshot ${snapshot.doc.get("shopRating")}");
+      debugPrint("snapshot ${snapshot.doc.get("shopRating")}");
       ratingList.add(snapshot.doc.get("shopRating"));
-      print("rating list init ${ratingList}");
+      debugPrint("rating list init $ratingList");
     }
   }
 
@@ -62,21 +62,21 @@ class _GiveReviewScreenState extends State<GiveReviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.snapshotData['shopName'],style: TextStyle(fontFamily: AppFont.bold),),
+        title: Text(widget.snapshotData['shopName'],style: const TextStyle(fontFamily: AppFont.bold),),
         actions: [
           Visibility(
             visible: buttonVisible,
             child: TextButton(
                onPressed: () async {
                 ratingList.clear();
-                 print("ratingList $ratingList");
-                 print("userRating $userRating");
-                 print("rating $rating");
+                debugPrint("ratingList $ratingList");
+                debugPrint("userRating $userRating");
+                debugPrint("rating $rating");
                 var querySnapShot = await FirebaseCollection().userCollection.
                 where('userEmail',isEqualTo: FirebaseAuth.instance.currentUser?.email).get();
 
-                var queryUserRatingSnapshots = await FirebaseCollection().userRatingCollection.
-                where('shopName',isEqualTo: widget.snapshotData['shopName']).get();
+                // var queryUserRatingSnapshots = await FirebaseCollection().userRatingCollection.
+                // where('shopName',isEqualTo: widget.snapshotData['shopName']).get();
 
                 var queryShopSnapshots = await FirebaseCollection().shopCollection.
                 where('shopName',isEqualTo: widget.snapshotData['shopName']).get();
@@ -147,12 +147,12 @@ class _GiveReviewScreenState extends State<GiveReviewScreen> {
                         address: address, coverPageImage: coverPageImage,
                         barberImage: barberImage, shopImage: shopImage,
                         timestamp: timestamp);
-                    print("edit shop screen ${widget.snapshotData['barberName']}");
-                    print("edit shop screen ${widget.snapshotData['shopEmail']}");
+                    debugPrint("edit shop screen ${widget.snapshotData['barberName']}");
+                    debugPrint("edit shop screen ${widget.snapshotData['shopEmail']}");
                     // var barberQuerySnapshot = await FirebaseCollection().barberCollection.
                     // where('currentUser',isEqualTo: widget.snapshotData['currentUser']).where('barberName',isEqualTo: widget.snapshotData['barberName']).get();
                     // for(var barberSnapshot in barberQuerySnapshot.docChanges){
-                      print("edit shop screen ${widget.snapshotData['shopEmail']} ${widget.snapshotData['barberName']}");
+                    debugPrint("edit shop screen ${widget.snapshotData['shopEmail']} ${widget.snapshotData['barberName']}");
                       FirebaseCollection().barberCollection.doc('${widget.snapshotData['shopEmail']}${widget.snapshotData['barberName']}').delete();
                       AddShopDetailFirebase().addBarberDetail(
                           uId: uId,
@@ -182,6 +182,7 @@ class _GiveReviewScreenState extends State<GiveReviewScreen> {
                           bName: widget.snapshotData['shopEmail'],
                           bMail: widget.snapshotData['barberName']
                       );
+                    if (!mounted) return;
                     // }
                     Navigator.pop(context);
                   });
