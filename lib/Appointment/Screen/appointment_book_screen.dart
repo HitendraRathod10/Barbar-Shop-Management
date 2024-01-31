@@ -874,7 +874,9 @@ class _AppointmentBookScreenState extends State<AppointmentBookScreen> {
                             openCheckout(context);
                              // showAlertDialog(context);
 
-                          } : null,
+                          } :() => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("select the time"),
+                      )),
                           child: ButtonMixin().appButton(text: 'Book Now',
                           //     bgColor:
                           // appointmentSnapshot.eightAmTime != false ||

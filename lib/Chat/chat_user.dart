@@ -53,7 +53,7 @@ class _ChatUserScreenState extends State<ChatUserScreen> {
             } else if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.requireData.docChanges.isEmpty){
-              return const Center(child: Text("No User Available"));
+              return const Center(child: Text("Chat is not available"));
             } else {
               return ListView.builder(
                   itemCount: snapshot.data?.docs.length,

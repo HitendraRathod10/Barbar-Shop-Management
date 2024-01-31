@@ -57,13 +57,13 @@ class BestSalonServiceWidget extends StatelessWidget {
                           ],
                         ),
                       ),
-                      GestureDetector(
+                      InkWell(
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>const ServiceCategoryScreen()));
                         },
                         child: const Padding(
                             padding: EdgeInsets.all(10),
-                            child: Text('View All',style: TextStyle(color: AppColor.greyColor,fontSize: 12,fontFamily: AppFont.regular))),
+                            child: Text('View All',style: TextStyle(color: Colors.blue,fontSize: 12,fontFamily: AppFont.regular))),
                       )
                     ],
                   ),

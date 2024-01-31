@@ -70,7 +70,7 @@ class _EditShopScreenState extends State<EditShopScreen> {
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.text,
                         hintText: "Enter Shop name",
-                        prefixIcon: const Icon(Icons.shopping_basket_outlined,color: AppColor.appColor,size: 20),
+                        prefixIcon: const Icon(Icons.store_mall_directory,color: AppColor.appColor,size: 20),
                         validator: (value) {
                           if (value == null ||
                               value.isEmpty ||

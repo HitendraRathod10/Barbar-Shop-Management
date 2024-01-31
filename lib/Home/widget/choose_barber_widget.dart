@@ -57,13 +57,13 @@ class ChooseBarberWidget extends StatelessWidget {
                           ],
                         ),
                       ),
-                      GestureDetector(
+                      InkWell(
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>const BarberScreen()));
                         },
                         child: const Padding(
                             padding:  EdgeInsets.all(10),
-                            child: Text('View All',style: TextStyle(color: AppColor.greyColor,fontSize: 12,fontFamily: AppFont.regular),)),
+                            child: Text('View All',style: TextStyle(color: Colors.blue,fontSize: 12,fontFamily: AppFont.regular),)),
                       )
                     ],
                   ),
@@ -71,33 +71,35 @@ class ChooseBarberWidget extends StatelessWidget {
                 Container(
                   height: 93,
                   margin: const EdgeInsets.only(left: 10,bottom: 5),
-                  child: ListView.builder(
-                      itemCount: snapshot.data?.docChanges.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ShopDetailsScreen(snapshotData: snapshot.data?.docs[index])));
-                          },
-                          child: SizedBox(
-                            width: 90,
-                            height: 90,
-                            child: Column(
-                              children: [
-                                ClipOval(
-                                  child: Image.network(snapshot.data?.docs[index]['barberImage'],
-                                    height: 55,width: 55,fit: BoxFit.cover,
+                  child: Scrollbar(
+                    child: ListView.builder(
+                        itemCount: snapshot.data?.docChanges.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>ShopDetailsScreen(snapshotData: snapshot.data?.docs[index])));
+                            },
+                            child: SizedBox(
+                              width: 90,
+                              height: 90,
+                              child: Column(
+                                children: [
+                                  ClipOval(
+                                    child: Image.network(snapshot.data?.docs[index]['barberImage'],
+                                      height: 55,width: 55,fit: BoxFit.cover,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 5,),
-                                Text(capitalizeAllWord(snapshot.data?.docs[index]['barberName']),
-                                  style: const TextStyle(fontSize: 10,fontFamily: AppFont.regular),
-                                  textAlign: TextAlign.center,maxLines: 2,overflow: TextOverflow.ellipsis,)
-                              ],
+                                  const SizedBox(height: 5,),
+                                  Text(capitalizeAllWord(snapshot.data?.docs[index]['barberName']),
+                                    style: const TextStyle(fontSize: 10,fontFamily: AppFont.regular),
+                                    textAlign: TextAlign.center,maxLines: 2,overflow: TextOverflow.ellipsis,)
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      }
+                          );
+                        }
+                    ),
                   ),
                 ),
               ],

@@ -1,6 +1,7 @@
 import 'package:barber_booking_management/Firebase/firebase_collection.dart';
 import 'package:barber_booking_management/Profile/screen/edit_shop_screen.dart';
 import 'package:barber_booking_management/utils/app_image.dart';
+import 'package:barber_booking_management/utils/app_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -86,10 +87,13 @@ class MyShopScreen extends StatelessWidget {
                               onPressed:  () async {
                                 debugPrint('Document Id ${ snapshot.data?.docs[index]['shopName']} ');
                                 debugPrint('Document Id ${ snapshot.data?.docs[index]['hairCategory']} ');
+                                Navigator.pop(context);
                                 await FirebaseCollection().shopCollection.
                                 doc('${snapshot.data?.docs[index]['currentUser']}'
                                     '${snapshot.data?.docs[index]['hairCategory']}')
                                     .delete();
+                                AppUtils.instance.showToast(toastMessage: 'delete successfully.');
+
                               },
                             );
                             AlertDialog alert = AlertDialog(

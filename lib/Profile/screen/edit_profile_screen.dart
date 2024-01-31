@@ -215,6 +215,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   value.isEmpty ||
                                   value.trim().isEmpty) {
                                 return 'Please enter phone number';
+                              }else if(value.length != 10){
+                                return 'Please enter valid phone number';
                               }
                               return null;
                             },
@@ -249,7 +251,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 }
                               },
                               child: ButtonMixin()
-                                  .appButton(onPress: () {}, text: 'Edit Profile'),
+                                  .appButton(onPress: () {}, text: 'Update Profile'),
                             ),
                           ),
                           const SizedBox(height: 20)

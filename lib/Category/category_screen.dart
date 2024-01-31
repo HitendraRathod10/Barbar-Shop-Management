@@ -47,151 +47,153 @@ class _CategoryScreenState extends State<CategoryScreen> {
         appBar: AppBar(
           title: const Text('Category',style: TextStyle(fontFamily: AppFont.bold),),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                const Text('Gender',style: TextStyle(fontFamily: AppFont.regular),),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Radio(value: 'Male', groupValue: gender, activeColor: AppColor.appColor,onChanged: (index) {
-                          setState((){
-                            gender = index.toString();
-                          });
-                        }),
-                        const Text('Male',style: TextStyle(fontFamily: AppFont.regular),)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Radio(value: "Female", groupValue: gender, activeColor: AppColor.appColor, onChanged: (index) {
-                          setState((){
-                            gender = index.toString();
-                          });
-                        }),
-                        const Text('Female',style: TextStyle(fontFamily: AppFont.regular),)
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                ListView.builder(
-                    itemCount: gender == 'Male' ? maleHairCategoryList.length : femaleHairCategoryList.length,
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context,index){
-                      return
-                        // child: Container(
-                        //   margin: const EdgeInsets.only(right: 10,top: 10),
-                        //   width: double.infinity,
-                        //   decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(10)
-                        //   ),
-                        //   child:  Row(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     mainAxisAlignment: MainAxisAlignment.start,
-                        //     children: [
-                        //       ClipRRect(
-                        //         child: Image.network(
-                        //           gender == 'Male' ? maleHairCategoryList[index].serviceImage : femaleHairCategoryList[index].serviceImage,
-                        //           height: 90,width: 80,fit: BoxFit.fill,),
-                        //       ),
-                        //       Expanded(
-                        //         child: Padding(
-                        //           padding: const EdgeInsets.only(left: 10),
-                        //           child: Column(
-                        //             mainAxisAlignment: MainAxisAlignment.start,
-                        //             crossAxisAlignment: CrossAxisAlignment.start,
-                        //             children:  [
-                        //               Text(
-                        //                   gender == 'Male' ? maleHairCategoryList[index].serviceName : femaleHairCategoryList[index].serviceName,
-                        //                   style : const TextStyle(color: AppColor.appColor),maxLines: 2,overflow: TextOverflow.ellipsis),
-                        //               const SizedBox(height: 2),
-                        //               Text(
-                        //                   gender == 'Male' ? maleHairCategoryList[index].serviceGender : femaleHairCategoryList[index].serviceGender,
-                        //                   style : const TextStyle(color: AppColor.aquaColor2,fontSize: 12),maxLines: 2,overflow: TextOverflow.ellipsis),
-                        //               const SizedBox(height: 4),
-                        //               // const Text('30 Shop',
-                        //               //     style : TextStyle(color: AppColor.blackColor,fontSize: 10),overflow: TextOverflow.ellipsis),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //       )
-                        //     ],
-                        //   ),
-                        // ),
-                        Container(
-                          height: 150,
-                          margin: const EdgeInsets.only(right: 10,bottom: 10),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              // color: index.isEven ? AppColor.appColorPink.withOpacity(0.4) : AppColor.appColorPink.withOpacity(0.7),
-                              borderRadius: BorderRadius.circular(20),
-                              gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [AppColor.appColorPink.withOpacity(0.8),AppColor.appColor.withOpacity(0.8)]
-                              )
-                          ),
-                          child:  Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 30,top: 20),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children:  [
-                                      Text(
-                                          gender == 'Male' ? maleHairCategoryList[index].serviceName : femaleHairCategoryList[index].serviceName,
-                                          style : const TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular),maxLines: 2,overflow: TextOverflow.ellipsis),
-                                      const SizedBox(height: 2),
-                                      Text(
-                                          gender == 'Male' ? maleHairCategoryList[index].serviceGender : femaleHairCategoryList[index].serviceGender,
-                                          style : TextStyle(color: AppColor.appColor.withOpacity(0.9),fontSize: 12,fontFamily: AppFont.regular),maxLines: 2,overflow: TextOverflow.ellipsis),
-                                      const SizedBox(height: 4),
-                                      GestureDetector(
-                                        onTap: (){
-                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>CategoryShopDetailScreen(hairCategory: maleHairCategoryList[index].serviceName,gender: gender,)));
-                                        },
-                                        child: Container(
-                                          margin: const EdgeInsets.only(top: 20),
-                                          padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
-                                          width: 100,
-                                          decoration: BoxDecoration(
-                                              color: AppColor.appColor,
-                                              borderRadius: BorderRadius.circular(20)
+        body: Scrollbar(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  const Text('Gender',style: TextStyle(fontFamily: AppFont.regular),),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Radio(value: 'Male', groupValue: gender, activeColor: AppColor.appColor,onChanged: (index) {
+                            setState((){
+                              gender = index.toString();
+                            });
+                          }),
+                          const Text('Male',style: TextStyle(fontFamily: AppFont.regular),)
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio(value: "Female", groupValue: gender, activeColor: AppColor.appColor, onChanged: (index) {
+                            setState((){
+                              gender = index.toString();
+                            });
+                          }),
+                          const Text('Female',style: TextStyle(fontFamily: AppFont.regular),)
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  ListView.builder(
+                      itemCount: gender == 'Male' ? maleHairCategoryList.length : femaleHairCategoryList.length,
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context,index){
+                        return
+                          // child: Container(
+                          //   margin: const EdgeInsets.only(right: 10,top: 10),
+                          //   width: double.infinity,
+                          //   decoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.circular(10)
+                          //   ),
+                          //   child:  Row(
+                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                          //     mainAxisAlignment: MainAxisAlignment.start,
+                          //     children: [
+                          //       ClipRRect(
+                          //         child: Image.network(
+                          //           gender == 'Male' ? maleHairCategoryList[index].serviceImage : femaleHairCategoryList[index].serviceImage,
+                          //           height: 90,width: 80,fit: BoxFit.fill,),
+                          //       ),
+                          //       Expanded(
+                          //         child: Padding(
+                          //           padding: const EdgeInsets.only(left: 10),
+                          //           child: Column(
+                          //             mainAxisAlignment: MainAxisAlignment.start,
+                          //             crossAxisAlignment: CrossAxisAlignment.start,
+                          //             children:  [
+                          //               Text(
+                          //                   gender == 'Male' ? maleHairCategoryList[index].serviceName : femaleHairCategoryList[index].serviceName,
+                          //                   style : const TextStyle(color: AppColor.appColor),maxLines: 2,overflow: TextOverflow.ellipsis),
+                          //               const SizedBox(height: 2),
+                          //               Text(
+                          //                   gender == 'Male' ? maleHairCategoryList[index].serviceGender : femaleHairCategoryList[index].serviceGender,
+                          //                   style : const TextStyle(color: AppColor.aquaColor2,fontSize: 12),maxLines: 2,overflow: TextOverflow.ellipsis),
+                          //               const SizedBox(height: 4),
+                          //               // const Text('30 Shop',
+                          //               //     style : TextStyle(color: AppColor.blackColor,fontSize: 10),overflow: TextOverflow.ellipsis),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       )
+                          //     ],
+                          //   ),
+                          // ),
+                          Container(
+                            height: 150,
+                            margin: const EdgeInsets.only(right: 10,bottom: 10),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                // color: index.isEven ? AppColor.appColorPink.withOpacity(0.4) : AppColor.appColorPink.withOpacity(0.7),
+                                borderRadius: BorderRadius.circular(20),
+                                gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [AppColor.appColorPink.withOpacity(0.8),AppColor.appColor.withOpacity(0.8)]
+                                )
+                            ),
+                            child:  Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 30,top: 20),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children:  [
+                                        Text(
+                                            gender == 'Male' ? maleHairCategoryList[index].serviceName : femaleHairCategoryList[index].serviceName,
+                                            style : const TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular),maxLines: 2,overflow: TextOverflow.ellipsis),
+                                        const SizedBox(height: 2),
+                                        Text(
+                                            gender == 'Male' ? maleHairCategoryList[index].serviceGender : femaleHairCategoryList[index].serviceGender,
+                                            style : TextStyle(color: AppColor.appColor.withOpacity(0.9),fontSize: 12,fontFamily: AppFont.regular),maxLines: 2,overflow: TextOverflow.ellipsis),
+                                        const SizedBox(height: 4),
+                                        GestureDetector(
+                                          onTap: (){
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>CategoryShopDetailScreen(hairCategory: maleHairCategoryList[index].serviceName,gender: gender,)));
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.only(top: 20),
+                                            padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
+                                            width: 100,
+                                            decoration: BoxDecoration(
+                                                color: AppColor.appColor,
+                                                borderRadius: BorderRadius.circular(20)
+                                            ),
+                                            child: const Center(child: Text('View Shop',style : TextStyle(color: AppColor.whiteColor,fontFamily: AppFont.regular))),
                                           ),
-                                          child: const Center(child: Text('View Shop',style : TextStyle(color: AppColor.whiteColor,fontFamily: AppFont.regular))),
-                                        ),
-                                      )
-                                      // const Text('30 Shop',
-                                      //     style : TextStyle(color: AppColor.blackColor,fontSize: 10),overflow: TextOverflow.ellipsis),
-                                    ],
+                                        )
+                                        // const Text('30 Shop',
+                                        //     style : TextStyle(color: AppColor.blackColor,fontSize: 10),overflow: TextOverflow.ellipsis),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(width: 10,),
-                              ClipRRect(
-                                child: Image.asset(
-                                  gender == 'Male' ? maleHairCategoryList[index].serviceImage :
-                                  femaleHairCategoryList[index].serviceImage,
-                                  height: double.infinity,width: 150,fit: BoxFit.cover,),
-                              ),
-                            ],
-                          ),
-                        );
-                    }
-                ),
-              ],
+                                const SizedBox(width: 10,),
+                                ClipRRect(
+                                  child: Image.asset(
+                                    gender == 'Male' ? maleHairCategoryList[index].serviceImage :
+                                    femaleHairCategoryList[index].serviceImage,
+                                    height: double.infinity,width: 150,fit: BoxFit.cover,),
+                                ),
+                              ],
+                            ),
+                          );
+                      }
+                  ),
+                ],
+              ),
             ),
           ),
         ),

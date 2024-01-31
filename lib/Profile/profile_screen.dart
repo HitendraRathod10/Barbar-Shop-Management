@@ -248,7 +248,7 @@ class ProfileScreen extends StatelessWidget {
                               const Text('Address',style:  TextStyle(color: AppColor.greyColor,fontFamily: AppFont.semiBold)),
                               const SizedBox(height: 5),
                               Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   const Icon(Icons.location_on,color: AppColor.appColor,),
                                   const SizedBox(width: 10),
@@ -321,6 +321,7 @@ class ProfileScreen extends StatelessWidget {
                                       PopupMenuItem(
                                         value: 1,
                                         child: Row(
+                                          mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Image.network('https://cdn-icons-png.flaticon.com/128/8188/8188360.png',scale: 5),
                                             // Icon(Icons.person_outline,color: AppColor.appColor,size: 20),
@@ -334,6 +335,7 @@ class ProfileScreen extends StatelessWidget {
                                       PopupMenuItem(
                                         value: 2,
                                         child: Row(
+                                          mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Image.network('https://cdn-icons-png.flaticon.com/128/1827/1827490.png',scale: 5,),
                                             // Image.asset(AppImage.appointment,height: 20,width: 20,),
@@ -347,6 +349,7 @@ class ProfileScreen extends StatelessWidget {
                                       PopupMenuItem(
                                         value: 3,
                                         child: Row(
+                                          mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Image.network('https://cdn-icons-png.flaticon.com/128/4212/4212182.png',scale: 5,),
                                             // Icon(Icons.logout,color: AppColor.appColor,size: 20,),

@@ -81,7 +81,7 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> with SingleTicker
                       backgroundColor: AppColor.whiteColor,
                       pinned: true,
                       shadowColor: AppColor.blackColor,
-                      toolbarHeight: 280,
+                      toolbarHeight: 300,
                       forceElevated: innerBoxIsScrolled,
                       flexibleSpace: Column(
                         children: [
@@ -109,14 +109,18 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> with SingleTicker
                                 ),
                               ),
 
-                              IconButton(onPressed: (){
-                                Navigator.pop(context);
-                              }, icon: ClipOval(
-                                child: Container(
-                                    color: AppColor.whiteColor.withOpacity(0.6),
-                                    padding: const EdgeInsets.only(left: 9,right: 5,bottom: 5,top: 4),
-                                    child: const Icon(Icons.arrow_back_ios,)),
-                              ),color: AppColor.appColor,iconSize: 20),
+                              Positioned(
+                                top: 10,
+                                left: 8,
+                                child: IconButton(onPressed: (){
+                                  Navigator.pop(context);
+                                }, icon: ClipOval(
+                                  child: Container(
+                                      color: AppColor.whiteColor.withOpacity(0.6),
+                                      padding: const EdgeInsets.only(left: 9,right: 5,bottom: 5,top: 4),
+                                      child: const Icon(Icons.arrow_back_ios,)),
+                                ),color: AppColor.appColor,iconSize: 20),
+                              ),
 
                               Positioned(
                                 left: 20,bottom: 10,right: 10,

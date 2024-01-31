@@ -11,6 +11,7 @@ import 'package:barber_booking_management/mixin/textfield_mixin.dart';
 import 'package:barber_booking_management/utils/app_color.dart';
 import 'package:barber_booking_management/utils/app_font.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -135,7 +136,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
       final coverImageUrl = await snapshot3.ref.getDownloadURL().whenComplete(() {
         // Provider.of<LoadingProvider>(context,listen: false).startLoading();
       });
-      AppUtils.instance.showToast(toastMessage: "Added Shop Successfully");
+      AppUtils.instance.showToast(toastMessage: "Shop Added Successfully");
 
       var userSnapShot = await FirebaseCollection().userCollection.
       where('userEmail',isEqualTo: FirebaseAuth.instance.currentUser?.email).get();
@@ -350,6 +351,10 @@ class _AddShopScreenState extends State<AddShopScreen> {
                               value.isEmpty ||
                               value.trim().isEmpty) {
                             return 'Please enter shop email';
+                          }else if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@"
+                          r"[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              .hasMatch(value)){
+                            return 'Please enter valid email';
                           }
                           return null;
                         },
@@ -367,6 +372,8 @@ class _AddShopScreenState extends State<AddShopScreen> {
                               value.isEmpty ||
                               value.trim().isEmpty) {
                             return 'Please enter phone number';
+                          }else if (value.length != 10){
+                            return 'Please enter valid Phone number';
                           }
                           return null;
                         },
@@ -429,6 +436,8 @@ class _AddShopScreenState extends State<AddShopScreen> {
                               value.isEmpty ||
                               value.trim().isEmpty) {
                             return 'Please enter price';
+                          }else if (int.parse(value) <= 0){
+                            return 'Please enter valid price';
                           }
                           return null;
                         },
@@ -442,7 +451,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                             borderRadius: BorderRadius.circular(10)
                         ),
 
-                        child: DropdownButtonFormField(
+                        child: DropdownButtonFormField2(
                           decoration: const InputDecoration(
                               border: UnderlineInputBorder(borderSide: BorderSide.none)),
                           value: snapshot.selectHairStyle,
@@ -456,7 +465,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                           isExpanded: true,
                           isDense: true,
                           style: TextStyle(color: AppColor.blackColor.withOpacity(0.5),fontSize: 13),
-                          icon: const Icon(Icons.arrow_drop_down,color: AppColor.appColor),
+                          // icon: const Icon(Icons.arrow_drop_down,color: AppColor.appColor),
                           onChanged: (String? newValue) {
                             snapshot.selectHairStyle = newValue!;
                             snapshot.getHairCategory;
@@ -482,7 +491,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                             borderRadius: BorderRadius.circular(10)
                         ),
 
-                        child: DropdownButtonFormField(
+                        child: DropdownButtonFormField2(
                           decoration: const InputDecoration(
                               border: UnderlineInputBorder(borderSide: BorderSide.none)),
                           value: snapshot.selectGender,
@@ -495,8 +504,8 @@ class _AddShopScreenState extends State<AddShopScreen> {
                           hint: const Text('Select Gender',style: TextStyle(fontSize: 13,fontFamily: AppFont.regular)),
                           isExpanded: true,
                           isDense: true,
-                          style: TextStyle(color: AppColor.blackColor.withOpacity(0.5),fontSize: 13,fontFamily: AppFont.regular),
-                          icon: const Icon(Icons.arrow_drop_down,color: AppColor.appColor,),
+                            style: TextStyle(color: AppColor.blackColor.withOpacity(0.5),fontSize: 13,fontFamily: AppFont.regular),
+                          // icon: const Icon(Icons.arrow_drop_down,color: AppColor.appColor,),
                           onChanged: (String? newValue) {
                             snapshot.selectGender = newValue!;
                             snapshot.getGender;
@@ -695,14 +704,34 @@ class _AddShopScreenState extends State<AddShopScreen> {
                       const SizedBox(height: 20),
                       GestureDetector(
                           onTap: () {
-                            if(_formKey.currentState!.validate())
-                            {
+                            if(_formKey.currentState!.validate()) {
                               if(barberFile != null && shopImageFile != null && coverShopImageFile != null
                                   && Provider.of<AddShopProvider>(context,listen: false).longitude != '' &&
                                   Provider.of<AddShopProvider>(context,listen: false).latitude != ''){
-                                uploadFile(context);
+
+                              setState(() {});
+                              uploadFile(context);
                               } else {
-                                AppUtils.instance.showToast(toastMessage: 'All field is required');
+                                String toastMsg = "";
+                                if(barberFile == null){
+                                  setState(() {
+                                    toastMsg = "Pick Barber Image";
+                                  });
+                                }else if(shopImageFile == null){
+                                  setState(() {
+                                    toastMsg = "Pick Shop Image";
+                                  });
+                                }else if(coverShopImageFile == null){
+                                  setState(() {
+                                    toastMsg = "Pick Cover Image";
+                                  });
+                                }else if( Provider.of<AddShopProvider>(context,listen: false).longitude == '' &&
+                                    Provider.of<AddShopProvider>(context,listen: false).latitude == ''){
+                                  setState(() {
+                                    toastMsg = "Select Shop Location";
+                                  });
+                                }
+                                AppUtils.instance.showToast(toastMessage: toastMsg);
                               }
                             }
                           },

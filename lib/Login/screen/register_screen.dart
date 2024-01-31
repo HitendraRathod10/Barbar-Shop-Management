@@ -7,11 +7,13 @@ import 'package:barber_booking_management/mixin/textfield_mixin.dart';
 import 'package:barber_booking_management/utils/app_color.dart';
 import 'package:barber_booking_management/utils/app_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/app_font.dart';
@@ -27,7 +29,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -38,6 +39,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   File? file;
   bool passwordVisibility = false,confirmPasswordVisibility = false;
   String? fcmToken;
+  bool dropDownbuttonValidate = false;
+  FocusNode node = new FocusNode();
 
   @override
   void initState() {
@@ -48,6 +51,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       setState(() {
         fcmToken = value;
       });
+    });
+    node.addListener(() {
+      if (!node.hasFocus) {
+        nameController.text = nameController.text.trimLeft();
+      }
     });
     super.initState();
   }
@@ -89,7 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     try {
       final ref = FirebaseStorage.instance.ref().child(destination);
       debugPrint("ref $ref");
-      UploadTask uploadsTask =  ref.putFile(file!);
+      UploadTask uploadsTask = ref.putFile(file!);
       final snapshot = await uploadsTask.whenComplete(() {
         debugPrint("uploads Task done");
       });
@@ -149,7 +157,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               key: _formKey,
               child: Padding(
                 padding: const EdgeInsets.only(top: 40.0,left: 20,right: 20,bottom: 20),
-                child: Column(
+                child: Consumer<LoginProvider>(builder: (context,snapshot,child){return  Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -172,9 +180,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           clipBehavior: Clip.none,
                           children : [
                             GestureDetector(
-                              onTap: (){
-                                selectImage(context);
-                              },
+                              onTap: () {},
                               child: ClipOval(
                                 child: file == null ?
                                 Image.asset(
@@ -203,11 +209,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const Text('Full Name',style: TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular),),
                     const SizedBox(height: 5),
                     TextFieldMixin().textFieldWidget(
-                        controller: nameController,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.text,
-                        hintText: "Enter Name",
-                        prefixIcon: const Icon(Icons.person_outline,color: AppColor.appColor),
+                      inputFormatters: [
+                        NoLeadingSpaceFormatter(),
+                      ],
+                      controller: nameController,
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.text,
+                      hintText: "Enter Name",
+                      prefixIcon: const Icon(Icons.person_outline,color: AppColor.appColor),
                       validator: (value) {
                         if (value == null ||
                             value.isEmpty ||
@@ -222,22 +231,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const Text('Email',style: TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular),),
                     const SizedBox(height: 5),
                     TextFieldMixin().textFieldWidget(
-                        controller: emailController,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.emailAddress,
-                        hintText: "Enter email",
-                        prefixIcon: const Icon(Icons.email_outlined,color: AppColor.appColor),
-                        validator: (value) {
-                          if (value!.isEmpty ||
-                              value.trim().isEmpty) {
-                            return 'Please enter an email';
-                          } else if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@"
-                          r"[a-zA-Z0-9]+\.[a-zA-Z]+")
-                              .hasMatch(value)){
-                            return 'Please enter valid email';
-                          }
-                          return null;
-                        },
+                      controller: emailController,
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.emailAddress,
+                      hintText: "Enter email",
+                      prefixIcon: const Icon(Icons.email_outlined,color: AppColor.appColor),
+                      validator: (value) {
+                        if (value!.isEmpty ||
+                            value.trim().isEmpty) {
+                          return 'Please enter an email';
+                        } else if
+                        (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)){
+                          return 'Please enter valid email';
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(height: 20),
                     const Text('Mobile Number',style: TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular),),
@@ -257,6 +265,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             value.trim().isEmpty) {
                           return 'Please enter phone number';
                         }
+                        if(value.length != 10){
+                          return 'Please enter valid number';
+                        }
                         return null;
                       },
                     ),
@@ -265,50 +276,52 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(height: 5),
                     Consumer<LoginProvider>(
                         builder: (BuildContext context, snapshot, Widget? child) {
-                        return Container(
-                          padding: const EdgeInsets.only(left: 20,top: 5,bottom: 5,right: 20),
-                          decoration: BoxDecoration(
-                            color: AppColor.textFieldColor,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-
-                          child: DropdownButtonFormField(
-                            decoration: const InputDecoration(
-                                border: UnderlineInputBorder(
-                                    borderSide:
-                                    BorderSide.none)),
-                            value: snapshot.selectUserType,
-                            validator: (value) {
-                              if (value == null) {
-                                return 'User type is required';
-                              }
-                              return null;
-                            },
-                            hint: const Text('Select User Type',style: TextStyle(fontFamily: AppFont.regular)),
-                            isExpanded: true,
-                            isDense: true,
-                            style: const TextStyle(color: AppColor.blackColor),
-                            icon: const Icon(Icons.arrow_drop_down),
-                            onChanged: (String? newValue) {
-                              snapshot.selectUserType = newValue!;
-                              snapshot.getUserType;
-                            },
-                            items: snapshot.selectUserTypeList
-                                .map<DropdownMenuItem<String>>((String userType) {
-                              return DropdownMenuItem<String>(
-                                  value: userType,
-                                  child: Row(
-                                    children: [
-                                      Text(userType,style: const TextStyle(fontSize: 12,fontFamily: AppFont.regular),)
-                                    ],
-                                  )
-                              );
-                            }).toList(),
-                          ),
-                        );
-                      }
+                          return Container(
+                            padding: const EdgeInsets.only(left: 20,top: 5,bottom: 5,right: 20),
+                            decoration: BoxDecoration(
+                              color: AppColor.textFieldColor,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: DropdownButtonFormField2(
+                              decoration: const InputDecoration(
+                                  border: UnderlineInputBorder(
+                                      borderSide:
+                                      BorderSide.none)),
+                              value: snapshot.selectUserType,
+                              // validator: (value) {
+                              //   if (value == null) {
+                              //     return 'User type is required';
+                              //   }
+                              //   return null;
+                              // },
+                              hint: const Text('Select User Type',style: TextStyle(fontFamily: AppFont.regular)),
+                              isExpanded: true,
+                              isDense: true,
+                              style: const TextStyle(color: AppColor.blackColor),
+                              // icon: const Icon(Icons.arrow_drop_down),
+                              onChanged: (String? newValue) {
+                                snapshot.selectUserType = newValue!;
+                                snapshot.getUserType;
+                              },
+                              items: snapshot.selectUserTypeList
+                                  .map<DropdownMenuItem<String>>((String userType) {
+                                return DropdownMenuItem<String>(
+                                    value: userType,
+                                    child: Row(
+                                      children: [
+                                        Text(userType,style: const TextStyle(fontSize: 12,fontFamily: AppFont.regular),)
+                                      ],
+                                    )
+                                );
+                              }).toList(),
+                            ),
+                          );
+                        }
                     ),
-
+                    dropDownbuttonValidate ? const Padding(
+                      padding: EdgeInsets.only(top: 8.0,left: 10),
+                      child:   Text("User type is required",style: TextStyle(color: Colors.red,fontSize: 13,fontWeight: FontWeight.w400),),
+                    ) :const SizedBox(),
                     const SizedBox(height: 20),
                     const Text('Password',style: TextStyle(color: AppColor.appColor,fontFamily: AppFont.regular)),
                     const SizedBox(height: 5),
@@ -385,44 +398,57 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(height: 40),
                     GestureDetector(
                         onTap: () async{
-                          if(_formKey.currentState!.validate()){
-                            Provider.of<LoadingProvider>(context,listen: false).startLoading();
-                            if(file !=null){
-                              uploadFile(context);
-                            }
-                            else{
-                            User? user = await LoginAuth.registerUsingEmailPassword(
-                                email: emailController.text,
-                                password: passwordController.text,
-                                name: nameController.text.trim(),
-                                fcmToken: fcmToken.toString(),
-                                mobile: phoneController.text.trim(),
-                                context: context
-                            );
-                            if (user != null) {
-                              AppUtils.instance.showToast(toastMessage: "Register Successfully");
-                              if (!mounted) return;
-                              LoginProvider().addUserDetail(
-                                  userName: nameController.text,
-                                  fcmToken: fcmToken.toString(),
-                                  userEmail: emailController.text, userMobile: phoneController.text,
-                                  uId: FirebaseAuth.instance.currentUser!.uid,
-                                  userImage: '', timestamp: Timestamp.now(),
-                                  shopDescription: '', barberImage: '', webSiteUrl: '',
-                                  status: '', barberName: '',
-                                  gender: '', longitudeShop: '', shopImage: '', address: '',
-                                  rating: 0.1, shopName: '', hairCategory: '', currentUser: '',
-                                  latitudeShop: '', openingHour: '', coverPageImage: '', contactNumber: '', price: '',
-                                  userType : Provider.of<LoginProvider>(context,listen: false).selectUserType.toString(), closingHour: '');
-                              // AppUtils.instance.setPref(PreferenceKey.boolKey, PreferenceKey.prefLogin, true);
-                              // AppUtils.instance.setPref(PreferenceKey.stringKey, PreferenceKey.prefEmail, emailController.text);
-                              Provider.of<LoadingProvider>(context,listen: false).stopLoading();
-                              // Provider.of<LoginProvider>(context,listen:false).getSharedPreferenceData(emailController.text);
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginScreensWithTabs()));
-                              // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const BottomNavBarScreen()));
-                            }
+
+                          if(snapshot.getUserType == null){
+                            setState(() {
+                              dropDownbuttonValidate = true;
+                            });
+                          }else{
+                            setState(() {
+                              dropDownbuttonValidate = false;
+                            });
                           }
-                          }
+
+                            if(_formKey.currentState!.validate()){
+                             if(!dropDownbuttonValidate){
+                               Provider.of<LoadingProvider>(context,listen: false).startLoading();
+                               if(file !=null){
+                                 uploadFile(context);
+                               }
+                               else{
+                                 User? user = await LoginAuth.registerUsingEmailPassword(
+                                     email: emailController.text,
+                                     password: passwordController.text,
+                                     name: nameController.text.trim(),
+                                     fcmToken: fcmToken.toString(),
+                                     mobile: phoneController.text.trim(),
+                                     context: context
+                                 );
+                                 if (user != null) {
+                                   AppUtils.instance.showToast(toastMessage: "Register Successfully");
+                                   if (!mounted) return;
+                                   LoginProvider().addUserDetail(
+                                       userName: nameController.text,
+                                       fcmToken: fcmToken.toString(),
+                                       userEmail: emailController.text, userMobile: phoneController.text,
+                                       uId: FirebaseAuth.instance.currentUser!.uid,
+                                       userImage: '', timestamp: Timestamp.now(),
+                                       shopDescription: '', barberImage: '', webSiteUrl: '',
+                                       status: '', barberName: '',
+                                       gender: '', longitudeShop: '', shopImage: '', address: '',
+                                       rating: 0.1, shopName: '', hairCategory: '', currentUser: '',
+                                       latitudeShop: '', openingHour: '', coverPageImage: '', contactNumber: '', price: '',
+                                       userType : Provider.of<LoginProvider>(context,listen: false).selectUserType.toString(), closingHour: '');
+                                   // AppUtils.instance.setPref(PreferenceKey.boolKey, PreferenceKey.prefLogin, true);
+                                   // AppUtils.instance.setPref(PreferenceKey.stringKey, PreferenceKey.prefEmail, emailController.text);
+                                   Provider.of<LoadingProvider>(context,listen: false).stopLoading();
+                                   // Provider.of<LoginProvider>(context,listen:false).getSharedPreferenceData(emailController.text);
+                                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginScreensWithTabs()));
+                                   // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const BottomNavBarScreen()));
+                                 }
+                               }
+                             }
+                            }
                         },
                         child: ButtonMixin().appButton(text: 'Sign Up')),
                     const SizedBox(height: 20),
@@ -462,12 +488,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
 
                   ],
-                ),
+                );},),
               ),
             ),
           ),
         ),
       ),
     );
+  }
+}
+class NoLeadingSpaceFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue,
+      TextEditingValue newValue,
+      ) {
+    if (newValue.text.startsWith(' ')) {
+      final String trimedText = newValue.text.trimLeft();
+      return TextEditingValue(
+        text: trimedText,
+        selection: TextSelection(
+          baseOffset: trimedText.length,
+          extentOffset: trimedText.length,
+        ),
+      );
+    }
+    return newValue;
   }
 }

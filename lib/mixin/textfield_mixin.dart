@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../utils/app_color.dart';
 import '../utils/app_font.dart';
@@ -26,9 +27,11 @@ class TextFieldMixin {
     bool obscureText = false,
     InputBorder? focusedBorder,
     String? labelText,
-    TextStyle? labelStyle
+    List<TextInputFormatter>? inputFormatters,
+    TextStyle? labelStyle,
   }) {
     return TextFormField(
+      inputFormatters: inputFormatters,
       readOnly: readOnly,
       cursorColor: Colors.black,
       style: const TextStyle(fontSize: 13,fontFamily: AppFont.regular),
@@ -66,6 +69,7 @@ class TextFieldMixin {
           errorStyle: const TextStyle(
             fontSize: 12.0,fontFamily: AppFont.regular
           ),
+        errorMaxLines: 4
       ),
     );
   }
