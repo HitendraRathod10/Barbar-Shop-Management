@@ -85,13 +85,25 @@ class MyShopScreen extends StatelessWidget {
                             Widget yesButton = TextButton(
                               child: const Text("Yes",style: TextStyle(color: AppColor.whiteColor,fontSize: 12,fontFamily: AppFont.bold),),
                               onPressed:  () async {
+                                final uid= snapshot.data?.docs[index]['uid'];
                                 debugPrint('Document Id ${ snapshot.data?.docs[index]['shopName']} ');
                                 debugPrint('Document Id ${ snapshot.data?.docs[index]['hairCategory']} ');
+                                debugPrint('UID  $uid');
                                 Navigator.pop(context);
                                 await FirebaseCollection().shopCollection.
                                 doc('${snapshot.data?.docs[index]['currentUser']}'
                                     '${snapshot.data?.docs[index]['hairCategory']}')
                                     .delete();
+                                await FirebaseCollection().barberCollection
+                                    .where('uid', isEqualTo: uid)
+                                    .get()
+                                    .then((querySnapshot) {
+                                  querySnapshot.docs.forEach((document) {
+                                    document.reference.delete();
+                                  });
+                                });
+
+
                                 AppUtils.instance.showToast(toastMessage: 'delete successfully.');
 
                               },

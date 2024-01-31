@@ -16,6 +16,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
@@ -171,8 +172,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
             userType: snapshot.doc.get('userType')
         );
 
-        AddShopDetailFirebase().
-        addShopDetail(
+        AddShopDetailFirebase().addShopDetail(
             uId: FirebaseAuth.instance.currentUser!.uid,
             userName: snapshot.doc.get('userName'),
             shopName: shopNameController.text,
@@ -195,8 +195,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
             barberImage: barberImageUrl, shopImage: shopImageUrl,
             timestamp: Timestamp.now(), shopEmail: shopEmailController.text);
 
-        AddShopDetailFirebase().
-        addBarberDetail(
+        AddShopDetailFirebase().addBarberDetail(
             uId: FirebaseAuth.instance.currentUser!.uid,
             userName: snapshot.doc.get('userName'),
             shopName: shopNameController.text,
@@ -205,7 +204,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
             status: 'OPEN',
             openingHour: pickedOpeningTime!.format(context).toString(),
             closingHour: pickedClosingTime!.format(context).toString(),
-            barberName: barberNameController.text,
+            barberName: barberNameController.text.trim(),
             currentUser: '${FirebaseAuth.instance.currentUser?.email}',
             hairCategory: Provider.of<AddShopProvider>(context,listen: false).selectHairStyle.toString(),
             price: priceController.text,
@@ -217,7 +216,11 @@ class _AddShopScreenState extends State<AddShopScreen> {
             address: addressController.text,
             coverPageImage: coverImageUrl,
             barberImage: barberImageUrl, shopImage: shopImageUrl,
-            timestamp: Timestamp.now(), shopEmail: shopEmailController.text,bMail: '',bName: '',checkB: false);
+            timestamp: Timestamp.now(),
+            shopEmail: shopEmailController.text,
+            bMail: "${FirebaseAuth.instance.currentUser?.email}",
+            bName: barberNameController.text,
+            checkB: false);
       }
       Navigator.pushAndRemoveUntil(
           context,
@@ -366,6 +369,7 @@ class _AddShopScreenState extends State<AddShopScreen> {
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.number,
                         hintText: "Enter Contact Number",
+                        inputFormatters: [LengthLimitingTextInputFormatter(10),FilteringTextInputFormatter.digitsOnly],
                         prefixIcon: const Icon(Icons.phone_android_outlined,color: AppColor.appColor,size: 20),
                         validator: (value) {
                           if (value == null ||
@@ -708,8 +712,6 @@ class _AddShopScreenState extends State<AddShopScreen> {
                               if(barberFile != null && shopImageFile != null && coverShopImageFile != null
                                   && Provider.of<AddShopProvider>(context,listen: false).longitude != '' &&
                                   Provider.of<AddShopProvider>(context,listen: false).latitude != ''){
-
-                              setState(() {});
                               uploadFile(context);
                               } else {
                                 String toastMsg = "";

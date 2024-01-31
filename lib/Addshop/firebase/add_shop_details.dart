@@ -108,8 +108,7 @@ class AddShopDetailFirebase {
     DocumentReference documentReferencer =
     FirebaseCollection().barberCollection.doc('${FirebaseAuth.instance.currentUser?.email}$barberName');
 
-    DocumentReference documentReferencerForChooseBarber =
-    FirebaseCollection().barberCollection.doc('$bMail$bName');
+    DocumentReference documentReferencerForChooseBarber = FirebaseCollection().barberCollection.doc('$bMail$bName');
 
     Map<String, dynamic> data = <String, dynamic>{
       "userName": userName.toString(),
