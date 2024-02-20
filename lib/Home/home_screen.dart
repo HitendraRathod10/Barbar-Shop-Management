@@ -26,8 +26,11 @@ class _HomeScreenState extends State<HomeScreen> {
   String? userName,userImage,userType,userEmail;
 
   Future shopDetailsCheck() async{
-   var shopQuerySnapshot = await FirebaseCollection().userCollection.where('userEmail',
+    print("USER TYPE 2 ${FirebaseAuth.instance.currentUser?.email}");
+
+    var shopQuerySnapshot = await FirebaseCollection().userCollection.where('userEmail',
         isEqualTo: FirebaseAuth.instance.currentUser?.email).get();
+   print("USER TYPE 3");
 
    for(var snapShot in shopQuerySnapshot.docChanges){
       setState(() {
@@ -35,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
         userImage = snapShot.doc.get('userImage');
         userEmail = snapShot.doc.get('userEmail');
         userType = snapShot.doc.get('userType');
+        print("USER TYPE 4 $userType");
       });
     }
   }
@@ -54,7 +58,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    print("USER TYPE 1");
     shopDetailsCheck();
+    print("USER TYPE 5");
+
   }
 
   @override

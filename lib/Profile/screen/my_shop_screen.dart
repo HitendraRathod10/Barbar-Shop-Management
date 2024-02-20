@@ -92,6 +92,15 @@ class MyShopScreen extends StatelessWidget {
                                 doc('${snapshot.data?.docs[index]['currentUser']}'
                                     '${snapshot.data?.docs[index]['hairCategory']}')
                                     .delete();
+                                final uid= snapshot.data?.docs[index]['uid'];
+                                await FirebaseCollection().barberCollection
+                                    .where('uid', isEqualTo: uid)
+                                    .get()
+                                    .then((querySnapshot) {
+                                  querySnapshot.docs.forEach((document) {
+                                    document.reference.delete();
+                                  });
+                                });
                                 AppUtils.instance.showToast(toastMessage: 'delete successfully.');
 
                               },

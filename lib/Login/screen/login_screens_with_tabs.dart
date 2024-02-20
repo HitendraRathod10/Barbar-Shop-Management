@@ -18,7 +18,7 @@ class _LoginScreensWithTabsState extends State<LoginScreensWithTabs> with Ticker
     const Tab(child: FittedBox(child: Text('User',style: TextStyle(fontSize: 20,fontFamily: AppFont.bold)))),
     const Tab(child: FittedBox(child: Text('Shop Owner',style: TextStyle(fontSize: 20,fontFamily: AppFont.bold)))),
   ];
-
+int selectedTab = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -43,6 +43,7 @@ class _LoginScreensWithTabsState extends State<LoginScreensWithTabs> with Ticker
             ),
             tabs: _tabs,
             onTap: (val) {
+              selectedTab = val;
               // quoteTabController.animateTo(0);
               // orderTabController.animateTo(0);
               // setState(() {});
@@ -51,8 +52,8 @@ class _LoginScreensWithTabsState extends State<LoginScreensWithTabs> with Ticker
         ),
         body:TabBarView(
           controller: customerTabController,
-          children:  const [
-            LoginScreen(),
+          children:  [
+            LoginScreen(selectedTab == 0 ? "User":"Shop Owner"),
             // LoginScreenAdmin(),
             // LoginScreenEmployee()
           ],
