@@ -42,6 +42,7 @@ class TextFieldMixin {
       obscureText: obscureText,
       maxLength: maxLength,
       minLines: 1,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
           isDense: false,
           filled: true,
