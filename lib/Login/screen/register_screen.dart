@@ -105,11 +105,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         debugPrint("imageUrl downloaded");
       });
       User? user = await LoginAuth.registerUsingEmailPassword(
-          email: emailController.text,
-          password: passwordController.text,
+          email: emailController.text.toLowerCase().trim(),
+          password: passwordController.text.trim(),
           name: nameController.text.trim(),
           mobile: phoneController.text.trim(),
-          fcmToken: fcmToken.toString(),
+          fcmToken: fcmToken.toString().trim(),
           context: context
       );
       if (user != null) {
@@ -117,16 +117,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
         debugPrint("current user ${FirebaseAuth.instance.currentUser!.uid}");
         LoginProvider().addUserDetail(
           uId: FirebaseAuth.instance.currentUser!.uid,
-            userName: nameController.text,
-            userEmail: emailController.text, userMobile: phoneController.text,
-            fcmToken: fcmToken.toString(),
+            userName: nameController.text.trim(),
+            userEmail: emailController.text.toLowerCase().trim(), userMobile: phoneController.text.trim(),
+            fcmToken: fcmToken.toString().trim(),
             userImage: imageUrl, timestamp: Timestamp.now(),
             shopDescription: '', barberImage: '', webSiteUrl: '',
             status: '', barberName: '',
             gender: '', longitudeShop: '', shopImage: '', address: '',
             rating: 0.1, shopName: '', hairCategory: '', currentUser: '',
             latitudeShop: '', openingHour: '', coverPageImage: '', contactNumber: '', price: '',
-            userType: Provider.of<LoginProvider>(context,listen: false).selectUserType.toString(), closingHour: '').then((value) {
+            userType: Provider.of<LoginProvider>(context,listen: false).selectUserType.toString().trim(), closingHour: '').then((value) {
           AppUtils.instance.showToast(toastMessage: "Register Successfully");
           // AppUtils.instance.setPref(PreferenceKey.boolKey, PreferenceKey.prefLogin, true);
           // AppUtils.instance.setPref(PreferenceKey.stringKey, PreferenceKey.prefEmail, emailController.text);
@@ -197,10 +197,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Positioned(
                               left: 50,
                               top: 40,
-                              child: ClipOval(
-                                  child: Container(
-                                    height: 25,width: 25,
-                                    color:Colors.white,child: const Icon(Icons.camera_alt,color: AppColor.appColor,size: 20,),)),
+                              child: GestureDetector(
+                                onTap: () => selectImage(context),
+                                child: ClipOval(
+                                    child: Container(
+                                      height: 25,width: 25,
+                                      color:Colors.white,child: const Icon(Icons.camera_alt,color: AppColor.appColor,size: 20,),)),
+                              ),
                             )
                           ]
                       ),
@@ -211,6 +214,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextFieldMixin().textFieldWidget(
                       inputFormatters: [
                         NoLeadingSpaceFormatter(),
+                        FilteringTextInputFormatter.allow(RegExp(r'[ a-zA-Z]'))
                       ],
                       controller: nameController,
                       textInputAction: TextInputAction.next,

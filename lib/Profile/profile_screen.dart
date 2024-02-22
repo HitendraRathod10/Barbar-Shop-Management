@@ -57,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                                 data['coverPageImage'],
                                 height: 170,
                                 width: double.infinity,
-                                fit: BoxFit.fill),
+                                fit: BoxFit.cover),
                             Positioned(
                               left: 0,right: 0,top: 130,
                               child: Column(

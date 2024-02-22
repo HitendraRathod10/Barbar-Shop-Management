@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // TODO: implement initState
     super.initState();
     FirebaseMessaging.instance.getToken().then((value) {
-      debugPrint('Token: $value');
+      debugPrint('Token: $value ${widget.selectedType}');
       setState(() {
         fcmToken = value;
       });
@@ -180,11 +180,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   .get();
                               print(
                                   "widget.selectedType ${widget.selectedType}");
-                              print(
-                                  "widget.selectedType ${snapshotData.docChanges[0].doc.get("userType")}");
-                              if (snapshotData.docChanges[0].doc
-                                      .get("userType") ==
-                                  widget.selectedType) {
+                              // print(
+                              //     "widget.selectedType ${snapshotData.docChanges[0].doc.get("userType")}");
+                              if (snapshotData.docChanges[0].doc.get("userType") == widget.selectedType) {
                                 AppUtils.instance.setPref(PreferenceKey.boolKey,
                                     PreferenceKey.prefLogin, true);
                                 AppUtils.instance.setPref(

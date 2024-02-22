@@ -274,7 +274,7 @@ class _EditShopScreenState extends State<EditShopScreen> {
                                     coverPageImage: widget.snapshotData['coverPageImage'],
                                     barberImage: widget.snapshotData['barberImage'],
                                     shopImage: widget.snapshotData['shopImage'],
-                                    timestamp: Timestamp.now(), shopEmail: shopEmailController.text,bMail: '',bName: '',checkB: false
+                                    timestamp: Timestamp.now(), shopEmail: shopEmailController.text,bMail: '',bName: barberNameController.text.trim(),checkB: false
                                 );
                               }
 
